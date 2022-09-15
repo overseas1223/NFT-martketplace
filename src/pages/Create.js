@@ -1,4 +1,4 @@
-import react, { useEffect } from "react";
+import React, { useEffect } from "react";
 import Accordion from "../components/base/Accordion";
 import AccordionHeader from "../components/base/AccordionHeader";
 import Button from "../components/base/Button";

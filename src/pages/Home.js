@@ -1,4 +1,4 @@
-import react from "react";
+import React from "react";
 import Hero from "../components/Hero";
 import "../styles/Home.css";
 import CardList from "../components/CardList";
@@ -14,7 +14,7 @@ const Home = () => {
         <CardList list={hotDropsData} />
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Home;

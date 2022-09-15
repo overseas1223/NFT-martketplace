@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createRef } from "react";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
-import { useLocation, Navigate } from "react-router";
+import { useLocation, Navigate } from "react-router-dom";
 import Card from "../components/base/Card";
 import "../styles/NFTDetail.css";
 import { ColorExtractor } from "react-color-extractor";

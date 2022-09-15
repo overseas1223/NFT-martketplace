@@ -1,4 +1,4 @@
-import react from "react";
+import React from "react";
 import CardList from "../components/CardList";
 import { exploreList } from "../constants/MockupData";
 import '../styles/Explore.css';
