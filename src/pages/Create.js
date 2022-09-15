@@ -43,23 +43,23 @@ const Create = () => {
   const createNewNFT = async () => {
     try {
       if(uploadFile === null) {
-        alert("Please upload Image File")
+        dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Image is required', type: 'error' }})
         return
       }
       if(name === "") {
-        alert("Please input Name")
+        dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Name is required', type: 'error' }})
         return
       }
       if(description === "") {
-        alert("Please input Description")
+        dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Description is required', type: 'error' }})
         return
       }
       if(price === "" || Number(price) < 0){
-        alert("Please input Price")
+        dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Price is required', type: 'error' }})
         return
       }
       if(balance < listingPrice) {
-        alert("Balance is insufficient")
+        dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Balance is insufficient', type: 'error' }})
         return
       }
     
@@ -95,6 +95,7 @@ const Create = () => {
       await nftContract.methods.createNFT(fileHash, dataHash).send({ from: wallet })
       const id = await nftContract.methods.getCurrentId().call()
       await marketContract.methods.createMarketItem(NFT_ADDRESS, id, Web3.utils.toWei(String(price), 'ether')).send({ from: wallet, value: Web3.utils.toWei(String(listingPrice), 'ether')})
+      dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Created New NFT successfully', type: 'success' }})
       dispatch({ type: SET_LOADING, payload: false})
       dispatch(mainAction.getBalanceOfBNB(web3Instance, wallet))
       setName("")

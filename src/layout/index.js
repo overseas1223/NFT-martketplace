@@ -13,7 +13,7 @@ const Layout = ({ child }) => {
   useEffect(() => {
     if(notification.notify) {
       if(notification.type === "error") NotificationManager.error(notification.text, 'Error', 3000)
-      
+      if(notification.type === "success") NotificationManager.success(notification.text, 'Success', 3000)
       dispatch({ type: NOTIFICATION_INITIAL })
     }
   }, [notification])

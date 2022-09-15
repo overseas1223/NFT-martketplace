@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import "../styles/Hero.css"
 
 const useWindowSize = () => {
@@ -18,18 +18,19 @@ const useWindowSize = () => {
 
 const Hero = () => {
   const width = useWindowSize()
-  let navigate = useNavigate()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const main = useSelector(state => state.main)
   const { wallet } = main
 
   const goExplore = () => { navigate("/explore")}
   const goCreate = () => {
     if(typeof window.ethereum === 'undefined') {
-      alert("Please install Metamask")
+      dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Please install Metamask', type: 'error' }})
       return
     }
     if(wallet) {
-      alert("Please connect Wallet")
+      dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Please connect Metamask', type: 'error' }})
       return
     }
     navigate("/create")

@@ -38,18 +38,19 @@ const NFTDetail = () => {
     try {
       dispatch({ type: SET_LOADING, payload: true})
       if(typeof window.ethereum === 'undefined') {
-        alert("Please install Metamask")
+        dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Please install Metamask', type: 'error' }})
         return
       }
       if(wallet === null) {
-        alert("Please connect Wallet")
+        dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Please connect Wallet', type: 'error' }})
         return
       }
       if(balance < state.item.price) {
-        alert("Balance is insufficient")
+        dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Balance is insufficient', type: 'error' }})
         return
       }
       await marketContract.methods.createMarketSale(NFT_ADDRESS, state.item.id).send({ from: wallet, value: Web3.utils.toWei(String(state.item.price), 'ether')})
+      dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Bought NFT successfully', type: 'success' }})
       dispatch({ type: SET_LOADING, payload: false})
     } catch (err) {
       console.log(err)
