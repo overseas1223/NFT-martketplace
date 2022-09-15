@@ -3,8 +3,8 @@ const PINATA_SECRET_API_KEY = "b1136711a25f07948bd6d36da2be31b0669ab70d1864d38ff
 const PINATA_API_FILE_URL = 'https://api.pinata.cloud/pinning/pinFileToIPFS'
 const PINATA_API_JSON_URL = 'https://api.pinata.cloud/pinning/pinJSONToIPFS'
 const PINATA_BASE_URL = 'https://gateway.pinata.cloud/ipfs/'
-const NFT_ADDRESS = '0x48c259b777CCD2a38A5B633d9b7335eBB2fbc34A'
-const MARKETPLACE_ADDRESS = '0xFcd2f929d842B9e64014a670E532878875AaC9Ce'
+const NFT_ADDRESS = '0xafab5C4aCe1568cD11846B2865abBAb30035ED39'
+const MARKETPLACE_ADDRESS = '0xeC640995382d6F909Eb438D0B1EB6c5E2C7d234c'
 const NFT_ABI = [
   {
     "inputs": [
@@ -484,6 +484,16 @@ const MARKETPLACE_ABI = [
             "type": "address"
           },
           {
+            "internalType": "string",
+            "name": "imgURL",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "metadataURL",
+            "type": "string"
+          },
+          {
             "internalType": "uint256",
             "name": "price",
             "type": "uint256"
@@ -534,6 +544,16 @@ const MARKETPLACE_ABI = [
             "type": "address"
           },
           {
+            "internalType": "string",
+            "name": "imgURL",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "metadataURL",
+            "type": "string"
+          },
+          {
             "internalType": "uint256",
             "name": "price",
             "type": "uint256"
@@ -582,6 +602,16 @@ const MARKETPLACE_ABI = [
             "internalType": "address payable",
             "name": "owner",
             "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "imgURL",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "metadataURL",
+            "type": "string"
           },
           {
             "internalType": "uint256",
@@ -651,6 +681,16 @@ const MARKETPLACE_ABI = [
             "internalType": "address payable",
             "name": "owner",
             "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "imgURL",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "metadataURL",
+            "type": "string"
           },
           {
             "internalType": "uint256",

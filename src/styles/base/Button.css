@@ -1,3 +1,8 @@
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
 .default-button {
     border:none;
     background-color: transparent;

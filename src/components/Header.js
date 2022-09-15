@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate, Link } from "react-router-dom"
 import Web3 from "web3"
+import { MARKETPLACE_ABI, MARKETPLACE_ADDRESS, NFT_ABI, NFT_ADDRESS } from "../constants/Constants"
 import { mainAction } from "../redux/actions/mainActions"
-import { SET_WALLET, SET_WEB3} from "../redux/type"
+import { SET_MARKET_CONTRACT, SET_NFT_CONTRACT, SET_WALLET, SET_WEB3} from "../redux/type"
 import "../styles/header.css"
 
 const CHAIN_ID = '0x61' // TEST BNC CHAIN-ID
+const BSC_PROVIDER = 'https://data-seed-prebsc-1-s1.binance.org:8545'
 
 const Header = () => {
   const dispatch = useDispatch()
   const state = useSelector(state => state.main)
   const { wallet, web3Instance } = state
   const navigate = useNavigate()
+
+  const handleExplore = () => { navigate('/explore') }
 
   const handleCreate = () => {
     if(typeof window.ethereum === 'undefined') {
@@ -28,6 +32,7 @@ const Header = () => {
 
   const handleWallet = async () => {
     if(typeof window.ethereum === 'undefined') {
+      dispatch({ type: SET_WEB3, payload: new Web3(BSC_PROVIDER) })
       alert("Pls install metamask")
       return
     }
@@ -51,15 +56,19 @@ const Header = () => {
   }
 
   useEffect(() => {
-    if(web3Instance && wallet) dispatch(mainAction.getBalanceOfBNB(web3Instance, wallet))
+    if(web3Instance) {
+      if(wallet) dispatch(mainAction.getBalanceOfBNB(web3Instance, wallet))
+      dispatch({ type: SET_NFT_CONTRACT, payload: new web3Instance.eth.Contract(NFT_ABI, NFT_ADDRESS) })
+      dispatch({ type: SET_MARKET_CONTRACT, payload: new web3Instance.eth.Contract(MARKETPLACE_ABI, MARKETPLACE_ADDRESS) })
+    }
   }, [web3Instance, wallet])
 
   useEffect(() => {
     const address = localStorage.getItem('wallet')
-    if(address && window.ethereum) {
+    if(address) {
       dispatch({ type: SET_WALLET, payload: address })
-      dispatch({ type: SET_WEB3, payload: new Web3(window.ethereum)})
-    }
+      if(window.ethereum) dispatch({ type: SET_WEB3, payload: new Web3(window.ethereum)})
+    } else dispatch({ type: SET_WEB3, payload: new Web3(BSC_PROVIDER) })
 
     if(window.ethereum) {
       window.ethereum.on('accountsChanged', async () => {
@@ -76,7 +85,7 @@ const Header = () => {
       <div id="header">
       <Link to='/' id='logo'>NFT Room</Link>
       <div id="link-containers">
-        <a>Explore</a>
+        <a onClick={handleExplore}>Explore</a>
         {wallet && <a>My NFTs</a>}
         <a onClick={handleCreate}>Create</a>
         <button id="connect-wallet" onClick={handleWallet} >{wallet ? `${wallet.substring(0, 9).toUpperCase()}...${wallet.substring(wallet.length - 4).toUpperCase()}` : 'Connect Wallet'}</button>

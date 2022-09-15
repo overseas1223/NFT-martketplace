@@ -24,7 +24,7 @@ const Button = ({
         height: `${height}`,
         color: `${isHover ? textColor : color}`,
         border: `1px solid ${color}`,
-        transition: "background-color .5 ease-in-out",
+        transition: "background-color 0.5 ease-in-out",
         backgroundColor: isHover ? color : textColor,
         fontSize: fontSize
       }}

@@ -3,19 +3,11 @@
   margin-left:15px;
   margin-right: 15px;
   width: 250px;
-  /* box-shadow: 0 15px 25px rgba(129, 124, 124, 0.2); */
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   height: 300px;
   border-radius: 30px;
   backdrop-filter: blur(50px);
-  /* filter:blur(4px); */
   background: rgb(2, 0, 36);
-  /* background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.05) 0%,
-    #00f5c966 0%,
-    rgba(255, 255, 255, 0.05) 70%
-  ); */
   padding: 10px;
   text-align: center;
   object-fit: cover;
@@ -26,13 +18,11 @@
   height: 170px;
   margin-top: 5px;
   border-radius: 20px;
+  object-fit: cover;
 }
 
 .card{
     animation:cardHoverAnimation 1s;
-    /* animation-iteration-count: infinite; */
-    
-    
 }
 
 .card:focus{
@@ -43,15 +33,8 @@
     display:flex;
     flex-direction:row;
     justify-content:space-between;
-    /* border:1px solid purple; */
     margin-left: 10px;
     margin-right: 10px;
-}
-
-.info-container{
-
-    /* border:1px solid red; */
-
 }
 
 .info-container > p {
@@ -73,11 +56,6 @@
     font-weight: bold;
     color: #ffffff;
     padding-top:10px;
-}
-
-.price-container{
-    /* border:1px solid green; */
-
 }
 
 .price-container > p {
@@ -104,7 +82,7 @@
 .buttons{
     display:flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     margin-top: 35px;
 }
 
@@ -135,8 +113,6 @@
 }
 
 .like{
-    /* width: 30px; */
-    /* height: 30px; */
     margin-right: 10px;
     background-color: transparent;
     border:none;

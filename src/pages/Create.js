@@ -11,11 +11,7 @@ import {
   PINATA_SECRET_API_KEY,
   PINATA_API_FILE_URL,
   PINATA_API_JSON_URL,
-  PINATA_BASE_URL,
-  MARKETPLACE_ADDRESS,
-  MARKETPLACE_ABI,
-  NFT_ADDRESS,
-  NFT_ABI
+  NFT_ADDRESS
 } from "../constants/Constants"
 import "../styles/Create.css"
 
@@ -24,9 +20,7 @@ let decimal = 10 ** 18
 const Create = () => {
   const dispatch = useDispatch()
   const state = useSelector(state => state.main)
-  const { wallet, web3Instance, balance } = state
-  const [marketContract, setMarketContract] = useState(null)
-  const [nftContract, setNftContract] = useState(null)
+  const { wallet, web3Instance, balance, nftContract, marketContract } = state
   const fileInputRef = useRef(null)
   const [listingPrice, setListingPrice] = useState(0)
   const [uploadFile, setUploadFile] = useState(null)
@@ -39,8 +33,6 @@ const Create = () => {
     const loadFile = Object.assign(files[0], { preview: URL.createObjectURL(files[0]) })
     setUploadFile(loadFile)
   }
-
-  // methods.createMarketItem(w, ,w,w w {value: Web3.eth.toWei(1, 'eth')})
 
   const getListingPrice = async () => {
     const price = await marketContract.methods.getListingPrice().call()
@@ -73,8 +65,7 @@ const Create = () => {
     fileData.append("file", uploadFile)
     let jsonData = {
       name: name,
-      description: description,
-      price: Number(price)
+      description: description
     }
 
     const result = await Promise.all([
@@ -98,22 +89,11 @@ const Create = () => {
     const fileHash = result[1].data.IpfsHash
     const dataHash = result[0].data.IpfsHash
 
-    console.log(fileHash, dataHash)
     await nftContract.methods.createNFT(fileHash, dataHash).send({ from: wallet })
-    console.log("mint")
     const id = await nftContract.methods.getCurrentId().call()
-    console.log(id)
     await marketContract.methods.createMarketItem(NFT_ADDRESS, id, Web3.utils.toWei(String(price), 'ether')).send({ from: wallet, value: Web3.utils.toWei(String(listingPrice), 'ether')})
-    console.log("success")
-    dispatch(mainAction.getBalanceOfBNB())
+    dispatch(mainAction.getBalanceOfBNB(web3Instance, wallet))
   }
-
-  useEffect(() => {
-    if(web3Instance) {
-      setNftContract(new web3Instance.eth.Contract(NFT_ABI, NFT_ADDRESS))
-      setMarketContract(new web3Instance.eth.Contract(MARKETPLACE_ABI, MARKETPLACE_ADDRESS))
-    }
-  }, [web3Instance])
 
   useEffect(() => {
     if(marketContract) getListingPrice()

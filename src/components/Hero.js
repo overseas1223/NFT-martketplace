@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Hero.css"
 
 const Hero = () => {
-  let navigate = useNavigate();
+  let navigate = useNavigate()
 
-  const goExplore = () => {
-    navigate("/explore");
-  };
-  
+  const goExplore = () => { navigate("/explore")}
   const goCreate = () => {
     if(typeof window.ethereum === 'undefined') {
       alert("Please install Metamask")

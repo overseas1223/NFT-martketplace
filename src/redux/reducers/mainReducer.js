@@ -5,6 +5,9 @@ const INITIAL_STATE = {
   loading: false,
   web3Instance: null,
   balance: 0,
+  nftContract: null,
+  marketContract: null,
+  marketItems: []
 }
 
 const mainReducer = (state = INITIAL_STATE, action) => {
@@ -24,6 +27,21 @@ const mainReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         balance: payload
+      }
+    case actionTypes.SET_NFT_CONTRACT:
+      return {
+        ...state,
+        nftContract: payload
+      }
+    case actionTypes.SET_MARKET_CONTRACT:
+      return {
+        ...state,
+        marketContract: payload
+      }
+    case actionTypes.SET_MARKET_ITEMS:
+      return {
+        ...state,
+        marketItems: payload
       }
     default:
       return state
