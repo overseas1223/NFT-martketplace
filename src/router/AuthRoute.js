@@ -8,7 +8,7 @@ const AuthRoute = ({ child, privateRoute }) => {
 
   useEffect(() => {
     const address = localStorage.getItem('wallet')
-    if(typeof address === null && privateRoute === true) navigate("/")
+    if(address === null && privateRoute === true) navigate("/")
   }, [])
 
   return (

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, createRef } from "react";
-import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import { useLocation, Navigate } from "react-router-dom";
 import Card from "../components/base/Card";
@@ -17,12 +16,8 @@ import { useARStatus } from "../hooks/isARStatus";
 
 const NFTDetail = () => {
   const isMobile = useMobile();
-
   const [colors, setColors] = useState([]);
-
   const [isLike, setIsLike] = useState(false);
-  
-  
 
   const like = () => setIsLike(!isLike);
 

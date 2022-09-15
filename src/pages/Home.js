@@ -1,8 +1,8 @@
 import React from "react";
 import Hero from "../components/Hero";
-import "../styles/Home.css";
 import CardList from "../components/CardList";
 import { hotDropsData } from "../constants/MockupData";
+import "../styles/Home.css";
 
 const Home = () => {
 

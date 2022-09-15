@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react"
 import axios from "axios"
 import Web3 from "web3"
-import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
 import Button from "../components/base/Button"
 import Image from "../components/base/Image"
 import TextInput from "../components/base/TextInput"
-import Header from "../components/Header"
+import { mainAction } from "../redux/actions/mainActions"
 import {
   PINATA_API_KEY,
   PINATA_SECRET_API_KEY,
@@ -20,10 +19,12 @@ import {
 } from "../constants/Constants"
 import "../styles/Create.css"
 
+let decimal = 10 ** 18
+
 const Create = () => {
-  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const state = useSelector(state => state.main)
-  const { wallet, web3Instance } = state
+  const { wallet, web3Instance, balance } = state
   const [marketContract, setMarketContract] = useState(null)
   const [nftContract, setNftContract] = useState(null)
   const fileInputRef = useRef(null)
@@ -43,7 +44,7 @@ const Create = () => {
 
   const getListingPrice = async () => {
     const price = await marketContract.methods.getListingPrice().call()
-    setListingPrice(price)
+    setListingPrice(Number(price) / decimal)
   }
 
   const createNewNFT = async () => {
@@ -63,6 +64,11 @@ const Create = () => {
       alert("Please input Price")
       return
     }
+    if(balance < listingPrice) {
+      alert("Balance is insufficient")
+      return
+    }
+  
     let fileData = new FormData()
     fileData.append("file", uploadFile)
     let jsonData = {
@@ -71,7 +77,6 @@ const Create = () => {
       price: Number(price)
     }
 
-    //IpfsHash
     const result = await Promise.all([
       axios.post(PINATA_API_JSON_URL, jsonData, {
         maxBodyLength: 'Infinity',
@@ -92,11 +97,16 @@ const Create = () => {
     ])
     const fileHash = result[1].data.IpfsHash
     const dataHash = result[0].data.IpfsHash
-  }
 
-  useEffect(()=> {
-    if(!wallet) navigate("/")
-  }, [wallet])
+    console.log(fileHash, dataHash)
+    await nftContract.methods.createNFT(fileHash, dataHash).send({ from: wallet })
+    console.log("mint")
+    const id = await nftContract.methods.getCurrentId().call()
+    console.log(id)
+    await marketContract.methods.createMarketItem(NFT_ADDRESS, id, Web3.utils.toWei(String(price), 'ether')).send({ from: wallet, value: Web3.utils.toWei(String(listingPrice), 'ether')})
+    console.log("success")
+    dispatch(mainAction.getBalanceOfBNB())
+  }
 
   useEffect(() => {
     if(web3Instance) {

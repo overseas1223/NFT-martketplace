@@ -1,9 +1,9 @@
 import React from "react";
 import CardList from "../components/CardList";
 import { exploreList } from "../constants/MockupData";
-import '../styles/Explore.css';
-import Header from "../components/Header";
 import Search from "../components/Search";
+import '../styles/Explore.css';
+
 const Explore = () => {
   return (
     <div id="explore">
