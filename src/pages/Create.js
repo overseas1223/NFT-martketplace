@@ -92,8 +92,6 @@ const Create = () => {
     ])
     const fileHash = result[1].data.IpfsHash
     const dataHash = result[0].data.IpfsHash
-    
-
   }
 
   useEffect(()=> {
@@ -113,7 +111,6 @@ const Create = () => {
 
   return (
     <div>
-      <Header />
       <div className="main-body">
         <h1>Create New NFT</h1>
         <div className="image-upload" onClick={() => { fileInputRef.current.click() }}>

@@ -40,14 +40,8 @@ const NFTDetail = () => {
 
   const isARSupport = useARStatus(state.item.src);
 
-  
-
-  //!! aciklama karakter sayisi sinirlanmali.
-  //!! scroll sorununa cozum bulunmali.
-
   return (
     <div>
-      <Header />
       <div id="nft-detail-card-wrapper">
         <Card
           width={isMobile ? "100%" : "65vw"}

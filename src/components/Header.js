@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate, Link } from "react-router-dom"
 import Web3 from "web3"
-import { SET_WALLET, SET_WEB3, SET_BALANCE } from "../redux/type"
+import { mainAction } from "../redux/actions/mainActions"
+import { SET_WALLET, SET_WEB3} from "../redux/type"
+import "../styles/header.css"
 
 const CHAIN_ID = '0x61' // TEST BNC CHAIN-ID
-const decimal = 10 ** 18
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -49,13 +50,8 @@ const Header = () => {
       })
   }
 
-  const getBalanceOfBNB = async (wallet) => {
-    const balance = await web3Instance.eth.getBalance(wallet)
-    dispatch({ type: SET_BALANCE, payload: Number(balance) / decimal })
-  }
-
   useEffect(() => {
-    if(web3Instance && wallet) getBalanceOfBNB(wallet)
+    if(web3Instance && wallet) dispatch(mainAction.getBalanceOfBNB(web3Instance, wallet))
   }, [web3Instance, wallet])
 
   useEffect(() => {
