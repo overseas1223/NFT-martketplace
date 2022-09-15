@@ -1,15 +1,9 @@
-import react, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { useEthers, useEtherBalance } from "@usedapp/core";
+import { useState } from "react"
+import { Link } from "react-router-dom"
 
 const Header = () => {
-
-    const {activateBrowserWallet, account} = useEthers();
-    const etherBalance = useEtherBalance(account);
-
+    const [wallet, SetWallet] = useState('Connect Wallet')
     const handleWallet = () => {
-      activateBrowserWallet();
-
     }
 
     return (
@@ -17,15 +11,13 @@ const Header = () => {
         <Link to='/' id='logo'>NFT Room</Link>
 
         <div id="link-containers">
-          <a>Start Hunting</a>
-          <a>Dark NFTs</a>
-          <a>Community</a>
-          <a>Craft NFT</a>
-
-          <button id="connect-wallet" onClick={handleWallet} >{!account ? 'Connect Wallet' : account}</button>
+          <a>Explore</a>
+          {wallet !== 'Connect Wallet' && <a>My NFTs</a>}
+          <a>Create</a>
+          <button id="connect-wallet" onClick={handleWallet} >{wallet === 'Connect Wallet' ? wallet : wallet}</button>
         </div>
       </div>
-    );
+    )
 }
 
-export default Header;
+export default Header
