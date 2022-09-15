@@ -1,15 +1,17 @@
-import React from "react";
-import '../../styles/base/Image.css';
+import React from "react"
+import UpLoadIcon from "../../assets/upload.png"
+import '../../styles/base/Image.css'
 
-const Image = ({src ,width, height}) => {
+const Image = ({src, width, height}) => {
 
     return (
         <img className="image" 
         style={{
             width:`${width}`,
-            height:`${height}`
+            height:`${height}`,
+            filter: src ?  'invert(0)' : 'invert(0.5)',
         }}
-        src={src} />
+        src={src ? src : UpLoadIcon} />
     );
 }
 

@@ -1,0 +1,28 @@
+.main-body {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.main-body h1 {
+    color: white;
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+.main-body .image-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 278px;
+    width: 358px;
+    padding: 4px;
+    cursor: pointer;
+    border: 3px dashed rgb(204, 204, 204);
+    border-radius: 10px;
+}
+
+.main-body .button-part {
+    margin-top: 20px;
+}

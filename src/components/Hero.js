@@ -9,14 +9,22 @@ const Hero = () => {
   const goExplore = () => {
     navigate("/explore");
   };
+  
   const goCreate = () => {
-    navigate("/create");
-  };
+    if(typeof window.ethereum === 'undefined') {
+      alert("Please install Metamask")
+      return
+    }
+    if(!localStorage.getItem('wallet')) {
+      alert("Please connect Wallet")
+      return
+    }
+    navigate("/create")
+  }
 
   return (
     <div id="hero">
       {/* <img id='hero-background' src={list[0].src}/> */}
-
       <Header />
 
       <h1 id="header-text-first"> NFT </h1>
