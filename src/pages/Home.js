@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <div id="home">
       <Hero />
-      <p id="card-list-header-text"> Hot Drops </p>
+      <p id="card-list-header-text"> Recent NFTs </p>
       <div id="list-container">
         <CardList list={marketItems.reverse().slice(0, 9)} />
       </div>

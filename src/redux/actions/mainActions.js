@@ -18,10 +18,11 @@ export const mainAction = {
         let marketItems = []
         results.forEach((result, index) => {
             marketItems.push({
+                id: items[index].itemId,
                 name: result.data.name,
                 description: result.data.description,
                 src: items[index].imgURL,
-                price: Number(items[index].price) / decimal
+                price: Number(items[index].price) / decimal,
             })
         })
         dispatch({ type: SET_MARKET_ITEMS, payload: marketItems })

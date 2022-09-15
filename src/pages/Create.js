@@ -93,6 +93,10 @@ const Create = () => {
     const id = await nftContract.methods.getCurrentId().call()
     await marketContract.methods.createMarketItem(NFT_ADDRESS, id, Web3.utils.toWei(String(price), 'ether')).send({ from: wallet, value: Web3.utils.toWei(String(listingPrice), 'ether')})
     dispatch(mainAction.getBalanceOfBNB(web3Instance, wallet))
+    setName("")
+    setPrice("")
+    setDescription("")
+    setUploadFile(null)
   }
 
   useEffect(() => {

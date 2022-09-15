@@ -1,104 +1,94 @@
-import React, { useState, useEffect, createRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation, Navigate } from "react-router-dom";
-import Card from "../components/base/Card";
-import "../styles/NFTDetail.css";
-import { ColorExtractor } from "react-color-extractor";
-import Button from "../components/base/Button";
-import { FaEthereum } from "react-icons/fa";
-import { AiOutlineHeart, AiFillHeart, AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-import { useMobile } from "../hooks/isMobile";
-import { hotDropsData } from "../constants/MockupData";
-import NFTCard from "../components/NFTCard";
-import { useARStatus } from "../hooks/isARStatus";
+import React, { useState, useEffect, useLayoutEffect } from "react"
+import { useSelector } from "react-redux"
+import { useLocation } from "react-router-dom"
+import Web3 from "web3"
+import Card from "../components/base/Card"
+import { ColorExtractor } from "react-color-extractor"
+import Button from "../components/base/Button"
+import { SiBinance } from "react-icons/si"
+import { useARStatus } from "../hooks/isARStatus"
+import { NFT_ADDRESS } from "../constants/Constants"
+import "../styles/NFTDetail.css"
 
-
+const useWindowSize = () => {
+  const [size, setSize] = useState(0)
+  useLayoutEffect(() => {
+    const updateSize = () => {
+      setSize(window.innerWidth)
+    }
+    window.addEventListener("resize", updateSize)
+    updateSize()
+    return () => window.removeEventListener("resize", updateSize)
+  }, [])
+  return size
+}
 
 const NFTDetail = () => {
-  const isMobile = useMobile();
-  const [colors, setColors] = useState([]);
-  const [isLike, setIsLike] = useState(false);
+  const width = useWindowSize()
+  const main = useSelector(state => state.main)
+  const { balance, marketContract, wallet } = main
+  const [colors, setColors] = useState([])
+  const { state } = useLocation()
+  const isARSupport = useARStatus(state.item.src)
+  const getColors = (colors) => { setColors((c) => [...c, ...colors])}
 
-  const like = () => setIsLike(!isLike);
+  const buyNFT = async () => {
+    if(typeof window.ethereum === 'undefined') {
+      alert("Please install Metamask")
+      return
+    }
+    if(wallet === null) {
+      alert("Please connect Wallet")
+      return
+    }
+    if(balance < state.item.price) {
+      alert("Balance is insufficient")
+      return
+    }
+    await marketContract.methods.createMarketSale(NFT_ADDRESS, state.item.id).send({ from: wallet, value: Web3.utils.toWei(String(state.item.price), 'ether')})
+  }
 
-  const getColors = (colors) => {
-    setColors((c) => [...c, ...colors]);
-  };
-
-  const navigate = useNavigate();
-
-  const { state } = useLocation();
-
-  useEffect(() => {
-    setColors([]);
-  }, [state]);
-
-  const isARSupport = useARStatus(state.item.src);
+  useEffect(() => { setColors([]) }, [state])
 
   return (
     <div>
       <div id="nft-detail-card-wrapper">
+        <h1>NFT Detail</h1>
         <Card
-          width={isMobile ? "100%" : "65vw"}
-          height={isMobile ? "700px" : "60vh"}
+          width={width < 1000 ? "80%" : "55vw"}
+          height={width < 1000 ? "650px" : "55vh"}
           blurColor={colors[0]}
           child={
-            //Detail Content
             <div id="detail-content">
              {isARSupport ? <model-viewer ar-scale="auto" ar ar-modes="webxr scene-viewer quick-look" id="arDetail" loading="eager" camera-controls auto-rotate src={state.item.src} > </model-viewer> 
              : <> <ColorExtractor getColors={getColors}>
                 <img id="detail-image" src={state.item.src} />
               </ColorExtractor></>}
-
-              <div id="detail-info" style={{}}>
+              <div id="detail-info">
                 <div id='detail-info-container'>
-                  <p id="collection"> {state.item.name} </p>
                   <p id="name"> {state.item.name} </p>
                   <p id="description" > {state.item.description} </p>
-
                 </div>
-
                 <div id="detail-controls">
                   <Button
-                    width={isMobile ? "70%" : "70%"}
+                    onClick={buyNFT}
+                    width={width < 1000 ? "70%" : "70%"}
                     height="50px"
                     child={
                       <div id="button-child">
-                        <FaEthereum size="28px" />
-                        <p id="price">1254</p>
+                        <SiBinance size="20px" />&nbsp;&nbsp;&nbsp;
+                        <p id="price">{state.item.price}</p>
                       </div>
                     }
                   ></Button>
-                  <div className="like-container">
-                    <button className="like" onClick={like}>
-                      {!isLike ? (
-                        <AiOutlineHeart size="45" color="white" />
-                      ) : (
-                        <AiFillHeart
-                          size="45"
-                          style={{
-                            stroke: `-webkit-linear-gradient(
-                    to bottom,
-                    #38ef7d,
-                    #11998e
-                  );`,
-                          }}
-                          color="#00f5c966"
-                        />
-                      )}
-                    </button>
-                    <p className="like-count">123</p>
-                  </div>
                 </div>
               </div>
             </div>
           }
         />
-        
       </div>
-
     </div>
-  );
-};
+  )
+}
 
-export default NFTDetail;
+export default NFTDetail

@@ -36,7 +36,7 @@ const TextInput = ({
             placeholder={placeholder}
             style={{ borderRadius: '0px', resize: 'none' }}
             onChange={(e) => { setValue(e.target.value) }}
-            defaultValue={value}
+            value={value}
           ></textarea>
         :
           <input 

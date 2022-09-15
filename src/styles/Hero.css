@@ -4,7 +4,7 @@
   text-align: center;
   position: relative;
   background-size: cover;
-  margin-top: 13rem;
+  margin-top: 150px;
 }
 
 #hero-background{
@@ -53,10 +53,8 @@
   margin-top: 20px;
 }
 
-/*#666C70*/
 
 #hero-buttons {
-  /* border:1px solid red; */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -74,17 +72,17 @@ button#explore {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 
-  background: #11998e; /* fallback for old browsers */
+  background: #11998e;
   background: -webkit-linear-gradient(
     to bottom,
     #38ef7d,
     #11998e
-  ); /* Chrome 10-25, Safari 5.1-6 */
+  );
   background: linear-gradient(
     to bottom,
     #38ef7d,
     #11998e
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  );
   color:#ffffff;
   cursor: pointer;
 }
@@ -102,7 +100,6 @@ button#create {
   border: 2px solid #ffffff;
   color: #ffffff;
   cursor: pointer;
-  
 }
 
 
@@ -112,7 +109,7 @@ button#create {
   }
 
   #hero {
-    height: 600px;
+    height: 500px;
     text-align: center;
   }
 
@@ -143,7 +140,6 @@ button#create {
   }
   
   #hero-buttons {
-    /* border:1px solid red; */
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -163,17 +159,17 @@ button#create {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   
-    background: #11998e; /* fallback for old browsers */
+    background: #11998e;
     background: -webkit-linear-gradient(
       to bottom,
       #38ef7d,
       #11998e
-    ); /* Chrome 10-25, Safari 5.1-6 */
+    );
     background: linear-gradient(
       to bottom,
       #38ef7d,
       #11998e
-    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    );
   
     font-weight: 600;
     color:#ffffff;
@@ -194,28 +190,4 @@ button#create {
     color: #ffffff;
     cursor: pointer;
   }
-
 }
-
-
-
-
-
-
-
-/* @keyframes borderAnimation {
-
-  0% {
-    border-left: 1px solid red;
-    
-  }
-
-  50%{
-    border-left: 1px solid red;
-    border-bottom: 1px solid red;
-    
-  }
-  100%{
-
-  }
-} */

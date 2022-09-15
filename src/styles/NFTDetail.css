@@ -5,13 +5,19 @@
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    padding-top:50px;
+}
+
+h1 {
+    color: white;
+    font-size: 50px !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
+    font-weight: bold !important;
 }
 
 #detail-content{
     width:100%;
     height:100%;
-    /* border:1px solid red; */
     display:flex;
     flex-direction:row;
 }
@@ -26,10 +32,10 @@ model-viewer#arDetail{
     width:60%;
     height:100%;
 }
+
 #detail-info{
     width:40%;
     height:100%;
-    /* border:1px solid green; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -38,7 +44,6 @@ model-viewer#arDetail{
 #detail-info-container{
     width:100%;
     height:90%;
-    /* border:1px solid red; */
     margin-bottom:20px;
     overflow:hidden;
     padding-bottom:20px;
@@ -80,16 +85,14 @@ p#description{
 #detail-controls{
     width:100%;
     height:50px;
-    /* border:1px solid red; */
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 #button-child{
     width:100%;
     height:100%;
-    /* border:1px solid cyan; */
     display:flex;
     flex-direction: row;
     justify-content: center;
@@ -107,27 +110,6 @@ p#description{
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     font-size:20px;
     font-weight: 600;
-}
-
-.like-container{
-    display: flex;
-    flex-direction: row;
-    margin-right: 10px;
-    text-align:center;
-    justify-content:center;
-    align-items: center;
-}
-
-
-.like{
-    /* width: 30px; */
-    /* height: 30px; */
-    margin-right: 10px;
-    background-color: transparent;
-    border:none;
-    cursor:pointer;
-    display:flex;
-    flex-direction: row;
 }
 
 #more-nft-container{
@@ -175,7 +157,6 @@ p#description{
     #detail-content{
         width:100%;
         height:100%;
-        /* border:1px solid red; */
         display:flex;
         flex-direction:column;
         padding-bottom: 20px;
@@ -212,7 +193,7 @@ p#description{
     #detail-info{
         width:100%;
         height:500px;
-        /* border:1px solid green; */
+
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -220,12 +201,9 @@ p#description{
     #detail-info-container{
         width:100%;
         height: 310px;
-        /* border:1px solid green; */
         margin-bottom:20px;
         overflow:hidden;
         padding-bottom:20px;
-        /* word-wrap: break-word;
-        word-break:'ellipsis-vertical' !important; */
         white-space: pre-line;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -233,10 +211,10 @@ p#description{
     
     #detail-controls{
         width:100%;
+        margin-top: -100px;
         height:50px;
-        /* border:1px solid red; */
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
     }
 }

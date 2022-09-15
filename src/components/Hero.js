@@ -1,9 +1,12 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
 import "../styles/Hero.css"
 
 const Hero = () => {
   let navigate = useNavigate()
+  const main = useSelector(state => state.main)
+  const { wallet } = main
 
   const goExplore = () => { navigate("/explore")}
   const goCreate = () => {
@@ -11,7 +14,7 @@ const Hero = () => {
       alert("Please install Metamask")
       return
     }
-    if(!localStorage.getItem('wallet')) {
+    if(wallet) {
       alert("Please connect Wallet")
       return
     }
