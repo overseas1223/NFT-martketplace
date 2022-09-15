@@ -26,8 +26,7 @@ const Button = ({
         border: `1px solid ${color}`,
         transition: "background-color .5 ease-in-out",
         backgroundColor: isHover ? color : textColor,
-        fontSize: fontSize,
-        transition: '0.5s'
+        fontSize: fontSize
       }}
     >
       {child ? child : textContent}

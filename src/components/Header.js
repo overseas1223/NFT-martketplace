@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import { useNavigate, Link } from "react-router-dom"
 import Web3 from "web3"
+import { SET_WALLET, SET_WEB3, SET_BALANCE } from "../redux/type"
 
 const CHAIN_ID = '0x61' // TEST BNC CHAIN-ID
+const decimal = 10 ** 18
 
 const Header = () => {
-  const [wallet, setWallet] = useState('Connect Wallet')
+  const dispatch = useDispatch()
+  const state = useSelector(state => state.main)
+  const { wallet, web3Instance } = state
   const navigate = useNavigate()
 
   const handleCreate = () => {
@@ -13,7 +18,7 @@ const Header = () => {
       alert("Please install Metamask")
       return
     }
-    if(wallet === 'Connect Wallet') {
+    if(wallet === null) {
       alert("Please connect Wallet")
       return
     }
@@ -29,7 +34,8 @@ const Header = () => {
       .then(async (accounts) => {
 
         let chainId = window.ethereum.chainId
-        setWallet(accounts[0])
+        dispatch({ type: SET_WALLET, payload: accounts[0]})
+        dispatch({ type: SET_WEB3, payload: new Web3(window.ethereum)})
         localStorage.setItem('wallet', accounts[0])
         
         if(chainId !== CHAIN_ID) {
@@ -39,25 +45,32 @@ const Header = () => {
           }).then((res) => {  }).catch(err => console.log(err))
         } 
       }).catch(async (err) => {
-        if (err.code === 4902) {
-          // await window.ethereum.request({
-          //   method: 'wallet_addEthereumChain',
-          //   params: [chainConfig]
-          // })
-        }
+        if (err.code === 4902) {}
       })
   }
 
+  const getBalanceOfBNB = async (wallet) => {
+    const balance = await web3Instance.eth.getBalance(wallet)
+    dispatch({ type: SET_BALANCE, payload: Number(balance) / decimal })
+  }
+
+  useEffect(() => {
+    if(web3Instance && wallet) getBalanceOfBNB(wallet)
+  }, [web3Instance, wallet])
+
   useEffect(() => {
     const address = localStorage.getItem('wallet')
-    if(address) setWallet(address)
+    if(address && window.ethereum) {
+      dispatch({ type: SET_WALLET, payload: address })
+      dispatch({ type: SET_WEB3, payload: new Web3(window.ethereum)})
+    }
 
     if(window.ethereum) {
       window.ethereum.on('accountsChanged', async () => {
         const accounts = await window.ethereum.request({method: 'eth_accounts'});
         if (!(accounts && accounts.length > 0)) {
           localStorage.clear()
-          setWallet('Connect Wallet')
+          dispatch({ type: SET_WALLET, payload: null})
         }
       })
     }
@@ -68,9 +81,9 @@ const Header = () => {
       <Link to='/' id='logo'>NFT Room</Link>
       <div id="link-containers">
         <a>Explore</a>
-        {wallet !== 'Connect Wallet' && <a>My NFTs</a>}
+        {wallet && <a>My NFTs</a>}
         <a onClick={handleCreate}>Create</a>
-        <button id="connect-wallet" onClick={handleWallet} >{wallet === 'Connect Wallet' ? wallet : wallet.substring(0, 9).toUpperCase()}...{wallet.substring(wallet.length - 4).toUpperCase()}</button>
+        <button id="connect-wallet" onClick={handleWallet} >{wallet ? `${wallet.substring(0, 9).toUpperCase()}...${wallet.substring(wallet.length - 4).toUpperCase()}` : 'Connect Wallet'}</button>
       </div>
     </div>
   )

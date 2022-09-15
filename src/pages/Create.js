@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react"
 import axios from "axios"
+import Web3 from "web3"
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import Button from "../components/base/Button"
 import Image from "../components/base/Image"
 import TextInput from "../components/base/TextInput"
@@ -9,12 +12,22 @@ import {
   PINATA_SECRET_API_KEY,
   PINATA_API_FILE_URL,
   PINATA_API_JSON_URL,
-  PINATA_BASE_URL
+  PINATA_BASE_URL,
+  MARKETPLACE_ADDRESS,
+  MARKETPLACE_ABI,
+  NFT_ADDRESS,
+  NFT_ABI
 } from "../constants/Constants"
 import "../styles/Create.css"
 
 const Create = () => {
+  const navigate = useNavigate()
+  const state = useSelector(state => state.main)
+  const { wallet, web3Instance } = state
+  const [marketContract, setMarketContract] = useState(null)
+  const [nftContract, setNftContract] = useState(null)
   const fileInputRef = useRef(null)
+  const [listingPrice, setListingPrice] = useState(0)
   const [uploadFile, setUploadFile] = useState(null)
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
@@ -26,7 +39,14 @@ const Create = () => {
     setUploadFile(loadFile)
   }
 
-  const createNewNFT = () => {
+  // methods.createMarketItem(w, ,w,w w {value: Web3.eth.toWei(1, 'eth')})
+
+  const getListingPrice = async () => {
+    const price = await marketContract.methods.getListingPrice().call()
+    setListingPrice(price)
+  }
+
+  const createNewNFT = async () => {
     if(uploadFile === null) {
       alert("Please upload Image File")
       return
@@ -52,35 +72,44 @@ const Create = () => {
     }
 
     //IpfsHash
-    axios.post(PINATA_API_JSON_URL, jsonData, {
-      maxBodyLength: 'Infinity', //this is needed to prevent axios from erroring out with large directories
-      headers: {
-          "Content-Type": "application/json",
-          pinata_api_key: PINATA_API_KEY,
-          pinata_secret_api_key: PINATA_SECRET_API_KEY
-      }
-    }).then(response => {
-      console.log(response)
-    }).catch(err => console.log(err))
-    // axios.post(PINATA_API_FILE_URL, data, {
-    //     maxBodyLength: 'Infinity', //this is needed to prevent axios from erroring out with large directories
-    //     headers: {
-    //         "Content-Type": `multipart/form-data ; boundary= ${data._boundary}`,
-    //         pinata_api_key: PINATA_API_KEY,
-    //         pinata_secret_api_key: PINATA_SECRET_API_KEY
-    //     }
-    //   }).then(response => {
-    //     console.log(response)
-    //   }).catch(err => console.log(err))
+    const result = await Promise.all([
+      axios.post(PINATA_API_JSON_URL, jsonData, {
+        maxBodyLength: 'Infinity',
+        headers: {
+            "Content-Type": "application/json",
+            pinata_api_key: PINATA_API_KEY,
+            pinata_secret_api_key: PINATA_SECRET_API_KEY
+        }
+      }),
+      axios.post(PINATA_API_FILE_URL, fileData, {
+        maxBodyLength: 'Infinity',
+        headers: {
+            "Content-Type": `multipart/form-data ; boundary= ${fileData._boundary}`,
+            pinata_api_key: PINATA_API_KEY,
+            pinata_secret_api_key: PINATA_SECRET_API_KEY
+        }
+      })
+    ])
+    const fileHash = result[1].data.IpfsHash
+    const dataHash = result[0].data.IpfsHash
+    
+
   }
 
   useEffect(()=> {
-    // const getValue = async () => {
-    //   const value = await axios.get(`${PINATA_BASE_URL}QmZUUtbmogWT2dGaj8Viymep3mrEa5Ldxg1Qq2QPP6oY7f`)
-    //   console.log(value.data.name)
-    // }
-    // getValue()   
-  },[])
+    if(!wallet) navigate("/")
+  }, [wallet])
+
+  useEffect(() => {
+    if(web3Instance) {
+      setNftContract(new web3Instance.eth.Contract(NFT_ABI, NFT_ADDRESS))
+      setMarketContract(new web3Instance.eth.Contract(MARKETPLACE_ABI, MARKETPLACE_ADDRESS))
+    }
+  }, [web3Instance])
+
+  useEffect(() => {
+    if(marketContract) getListingPrice()
+  }, [marketContract])
 
   return (
     <div>
