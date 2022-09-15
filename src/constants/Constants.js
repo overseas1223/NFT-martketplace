@@ -1,20 +1,26 @@
 const PINATA_API_KEY = 'b1595d122e177efa6f23';
 const PINATA_SECRET_API_KEY = "b1136711a25f07948bd6d36da2be31b0669ab70d1864d38fffee32772e6549fe"
-const PINATA_API_URL = 'https://api.pinata.cloud/pinning/pinFileToIPFS'
-const NFT_ADDRESS = '0x753f92Fa4A8258Bb0790129410CeAE38e619D0Db'
+const PINATA_API_FILE_URL = 'https://api.pinata.cloud/pinning/pinFileToIPFS'
+const PINATA_API_JSON_URL = 'https://api.pinata.cloud/pinning/pinJSONToIPFS'
+const PINATA_BASE_URL = 'https://gateway.pinata.cloud/ipfs/'
+const NFT_ADDRESS = '0xFD9f19f8Aa6f0e6A38A5271D1877e2bFef6a2400'
 const MARKETPLACE_ADDRESS = '0x1252a7072D7921ccb92e32cf86ac8D6dC2d8f0B9'
-const NFT_ABI = [{
-    "inputs": [{
-      "internalType": "address",
-      "name": "marketplaceAddress",
-      "type": "address"
-    }],
+const NFT_ABI = [
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "marketplaceAddress",
+        "type": "address"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
   {
     "anonymous": false,
-    "inputs": [{
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "owner",
@@ -38,7 +44,8 @@ const NFT_ABI = [{
   },
   {
     "anonymous": false,
-    "inputs": [{
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "owner",
@@ -62,7 +69,8 @@ const NFT_ABI = [{
   },
   {
     "anonymous": false,
-    "inputs": [{
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "from",
@@ -85,7 +93,8 @@ const NFT_ABI = [{
     "type": "event"
   },
   {
-    "inputs": [{
+    "inputs": [
+      {
         "internalType": "address",
         "name": "to",
         "type": "address"
@@ -102,52 +111,70 @@ const NFT_ABI = [{
     "type": "function"
   },
   {
-    "inputs": [{
-      "internalType": "address",
-      "name": "owner",
-      "type": "address"
-    }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
     "name": "balanceOf",
-    "outputs": [{
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{
-      "internalType": "string",
-      "name": "tokenURI",
-      "type": "string"
-    }],
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "tokenURI",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "metaData",
+        "type": "string"
+      }
+    ],
     "name": "createNFT",
-    "outputs": [{
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
     "name": "getApproved",
-    "outputs": [{
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{
+    "inputs": [
+      {
         "internalType": "address",
         "name": "owner",
         "type": "address"
@@ -159,42 +186,51 @@ const NFT_ABI = [{
       }
     ],
     "name": "isApprovedForAll",
-    "outputs": [{
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "name",
-    "outputs": [{
-      "internalType": "string",
-      "name": "",
-      "type": "string"
-    }],
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
     "name": "ownerOf",
-    "outputs": [{
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{
+    "inputs": [
+      {
         "internalType": "address",
         "name": "from",
         "type": "address"
@@ -216,7 +252,8 @@ const NFT_ABI = [{
     "type": "function"
   },
   {
-    "inputs": [{
+    "inputs": [
+      {
         "internalType": "address",
         "name": "from",
         "type": "address"
@@ -243,7 +280,8 @@ const NFT_ABI = [{
     "type": "function"
   },
   {
-    "inputs": [{
+    "inputs": [
+      {
         "internalType": "address",
         "name": "operator",
         "type": "address"
@@ -260,63 +298,78 @@ const NFT_ABI = [{
     "type": "function"
   },
   {
-    "inputs": [{
-      "internalType": "bytes4",
-      "name": "interfaceId",
-      "type": "bytes4"
-    }],
+    "inputs": [
+      {
+        "internalType": "bytes4",
+        "name": "interfaceId",
+        "type": "bytes4"
+      }
+    ],
     "name": "supportsInterface",
-    "outputs": [{
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "symbol",
-    "outputs": [{
-      "internalType": "string",
-      "name": "",
-      "type": "string"
-    }],
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
     "name": "tokenMetaData",
-    "outputs": [{
-      "internalType": "string",
-      "name": "",
-      "type": "string"
-    }],
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{
-      "internalType": "uint256",
-      "name": "tokenId",
-      "type": "uint256"
-    }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
     "name": "tokenURI",
-    "outputs": [{
-      "internalType": "string",
-      "name": "",
-      "type": "string"
-    }],
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{
+    "inputs": [
+      {
         "internalType": "address",
         "name": "from",
         "type": "address"
@@ -602,7 +655,9 @@ const MARKETPLACE_ABI = [{
 export {
   PINATA_API_KEY,
   PINATA_SECRET_API_KEY,
-  PINATA_API_URL,
+  PINATA_API_FILE_URL,
+  PINATA_API_JSON_URL,
+  PINATA_BASE_URL,
   NFT_ADDRESS,
   MARKETPLACE_ADDRESS,
   NFT_ABI,
