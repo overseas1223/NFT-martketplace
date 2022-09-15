@@ -5,6 +5,7 @@ import Web3 from "web3"
 import { MARKETPLACE_ABI, MARKETPLACE_ADDRESS, NFT_ABI, NFT_ADDRESS } from "../constants/Constants"
 import { mainAction } from "../redux/actions/mainActions"
 import { SET_MARKET_CONTRACT, SET_NFT_CONTRACT, SET_WALLET, SET_WEB3} from "../redux/type"
+import Logo from "../assets/logo.png"
 import "../styles/header.css"
 
 const CHAIN_ID = '0x61' // TEST BNC CHAIN-ID
@@ -83,7 +84,7 @@ const Header = () => {
 
   return (
       <div id="header">
-      <Link to='/' id='logo'>NFT Room</Link>
+      <Link to='/' id='logo'><img src={Logo} alt="log" /></Link>
       <div id="link-containers">
         <a onClick={handleExplore}>Explore</a>
         {wallet && <a>My NFTs</a>}

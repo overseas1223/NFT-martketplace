@@ -13,6 +13,7 @@ import {
   PINATA_API_JSON_URL,
   NFT_ADDRESS
 } from "../constants/Constants"
+import { SET_LOADING } from "../redux/type"
 import "../styles/Create.css"
 
 let decimal = 10 ** 18
@@ -40,63 +41,70 @@ const Create = () => {
   }
 
   const createNewNFT = async () => {
-    if(uploadFile === null) {
-      alert("Please upload Image File")
-      return
-    }
-    if(name === "") {
-      alert("Please input Name")
-      return
-    }
-    if(description === "") {
-      alert("Please input Description")
-      return
-    }
-    if(price === "" || Number(price) < 0){
-      alert("Please input Price")
-      return
-    }
-    if(balance < listingPrice) {
-      alert("Balance is insufficient")
-      return
-    }
-  
-    let fileData = new FormData()
-    fileData.append("file", uploadFile)
-    let jsonData = {
-      name: name,
-      description: description
-    }
+    try {
+      if(uploadFile === null) {
+        alert("Please upload Image File")
+        return
+      }
+      if(name === "") {
+        alert("Please input Name")
+        return
+      }
+      if(description === "") {
+        alert("Please input Description")
+        return
+      }
+      if(price === "" || Number(price) < 0){
+        alert("Please input Price")
+        return
+      }
+      if(balance < listingPrice) {
+        alert("Balance is insufficient")
+        return
+      }
+    
+      let fileData = new FormData()
+      fileData.append("file", uploadFile)
+      let jsonData = {
+        name: name,
+        description: description
+      }
 
-    const result = await Promise.all([
-      axios.post(PINATA_API_JSON_URL, jsonData, {
-        maxBodyLength: 'Infinity',
-        headers: {
-            "Content-Type": "application/json",
-            pinata_api_key: PINATA_API_KEY,
-            pinata_secret_api_key: PINATA_SECRET_API_KEY
-        }
-      }),
-      axios.post(PINATA_API_FILE_URL, fileData, {
-        maxBodyLength: 'Infinity',
-        headers: {
-            "Content-Type": `multipart/form-data ; boundary= ${fileData._boundary}`,
-            pinata_api_key: PINATA_API_KEY,
-            pinata_secret_api_key: PINATA_SECRET_API_KEY
-        }
-      })
-    ])
-    const fileHash = result[1].data.IpfsHash
-    const dataHash = result[0].data.IpfsHash
+      dispatch({ type: SET_LOADING, payload: true })
+      const result = await Promise.all([
+        axios.post(PINATA_API_JSON_URL, jsonData, {
+          maxBodyLength: 'Infinity',
+          headers: {
+              "Content-Type": "application/json",
+              pinata_api_key: PINATA_API_KEY,
+              pinata_secret_api_key: PINATA_SECRET_API_KEY
+          }
+        }),
+        axios.post(PINATA_API_FILE_URL, fileData, {
+          maxBodyLength: 'Infinity',
+          headers: {
+              "Content-Type": `multipart/form-data ; boundary= ${fileData._boundary}`,
+              pinata_api_key: PINATA_API_KEY,
+              pinata_secret_api_key: PINATA_SECRET_API_KEY
+          }
+        })
+      ])
+      const fileHash = result[1].data.IpfsHash
+      const dataHash = result[0].data.IpfsHash
 
-    await nftContract.methods.createNFT(fileHash, dataHash).send({ from: wallet })
-    const id = await nftContract.methods.getCurrentId().call()
-    await marketContract.methods.createMarketItem(NFT_ADDRESS, id, Web3.utils.toWei(String(price), 'ether')).send({ from: wallet, value: Web3.utils.toWei(String(listingPrice), 'ether')})
-    dispatch(mainAction.getBalanceOfBNB(web3Instance, wallet))
-    setName("")
-    setPrice("")
-    setDescription("")
-    setUploadFile(null)
+      await nftContract.methods.createNFT(fileHash, dataHash).send({ from: wallet })
+      const id = await nftContract.methods.getCurrentId().call()
+      await marketContract.methods.createMarketItem(NFT_ADDRESS, id, Web3.utils.toWei(String(price), 'ether')).send({ from: wallet, value: Web3.utils.toWei(String(listingPrice), 'ether')})
+      dispatch({ type: SET_LOADING, payload: false})
+      dispatch(mainAction.getBalanceOfBNB(web3Instance, wallet))
+      setName("")
+      setPrice("")
+      setDescription("")
+      setUploadFile(null)
+    } catch (err) {
+      console.log(err)
+      dispatch({ type: SET_LOADING, payload: false})
+    }
   }
 
   useEffect(() => {
@@ -148,7 +156,7 @@ const Create = () => {
             setValue={setPrice}
           />
         </div>
-        <div className="button-part" style={{ marginTop: '40px' }}>
+        <div className="button-part" style={{ marginTop: '40px', marginBottom: '30px' }}>
           <Button
             onClick={createNewNFT}
             width={"180px"}

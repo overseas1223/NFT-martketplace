@@ -43,6 +43,11 @@ const mainReducer = (state = INITIAL_STATE, action) => {
         ...state,
         marketItems: payload
       }
+    case actionTypes.SET_LOADING:
+      return {
+        ...state,
+        loading: payload
+      }
     default:
       return state
   }

@@ -56,8 +56,12 @@
 
 @media screen and (max-width: 978px) {
     #logo{
-        font-size: 18px;
         float: left;
         margin-left: 10px;
+    }
+
+    #connect-wallet {
+        width: 140px;
+        margin-right: 10px;
     }
 }

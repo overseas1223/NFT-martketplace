@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import "../../styles/base/Button.css";
 
 const Button = ({
-  width = "80px",
-  height = "30px",
+  width = "100px",
+  height = "40px",
   color = "#ffffff",
   onClick,
   textColor = "black",
   textContent = 'Button',
-  fontSize = '13px',
+  fontSize = '16px',
   child
 }) => {
   const [isHover, setHover] = useState(false);
