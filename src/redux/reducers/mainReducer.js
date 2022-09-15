@@ -7,7 +7,12 @@ const INITIAL_STATE = {
   balance: 0,
   nftContract: null,
   marketContract: null,
-  marketItems: []
+  marketItems: [],
+  notification: {
+    notify: false,
+    text: '',
+    type: '',
+  }
 }
 
 const mainReducer = (state = INITIAL_STATE, action) => {
@@ -47,6 +52,20 @@ const mainReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: payload
+      }
+    case actionTypes.SET_NOTIFICATION:
+      return {
+        ...state,
+        notification: payload
+      }
+    case actionTypes.NOTIFICATION_INITIAL:
+      return {
+        ...state,
+        notification: {
+          notify: false,
+          text: '',
+          type: ''
+        }
       }
     default:
       return state

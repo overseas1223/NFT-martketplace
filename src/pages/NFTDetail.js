@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from "react"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
 import Web3 from "web3"
 import Card from "../components/base/Card"
@@ -8,6 +8,7 @@ import Button from "../components/base/Button"
 import { SiBinance } from "react-icons/si"
 import { useARStatus } from "../hooks/isARStatus"
 import { NFT_ADDRESS } from "../constants/Constants"
+import { SET_LOADING } from "../redux/type"
 import "../styles/NFTDetail.css"
 
 const useWindowSize = () => {
@@ -25,6 +26,7 @@ const useWindowSize = () => {
 
 const NFTDetail = () => {
   const width = useWindowSize()
+  const dispatch = useDispatch()
   const main = useSelector(state => state.main)
   const { balance, marketContract, wallet } = main
   const [colors, setColors] = useState([])
@@ -33,19 +35,26 @@ const NFTDetail = () => {
   const getColors = (colors) => { setColors((c) => [...c, ...colors])}
 
   const buyNFT = async () => {
-    if(typeof window.ethereum === 'undefined') {
-      alert("Please install Metamask")
-      return
+    try {
+      dispatch({ type: SET_LOADING, payload: true})
+      if(typeof window.ethereum === 'undefined') {
+        alert("Please install Metamask")
+        return
+      }
+      if(wallet === null) {
+        alert("Please connect Wallet")
+        return
+      }
+      if(balance < state.item.price) {
+        alert("Balance is insufficient")
+        return
+      }
+      await marketContract.methods.createMarketSale(NFT_ADDRESS, state.item.id).send({ from: wallet, value: Web3.utils.toWei(String(state.item.price), 'ether')})
+      dispatch({ type: SET_LOADING, payload: false})
+    } catch (err) {
+      console.log(err)
+      dispatch({ type: SET_LOADING, payload: false})
     }
-    if(wallet === null) {
-      alert("Please connect Wallet")
-      return
-    }
-    if(balance < state.item.price) {
-      alert("Balance is insufficient")
-      return
-    }
-    await marketContract.methods.createMarketSale(NFT_ADDRESS, state.item.id).send({ from: wallet, value: Web3.utils.toWei(String(state.item.price), 'ether')})
   }
 
   useEffect(() => { setColors([]) }, [state])

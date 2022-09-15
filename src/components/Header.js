@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom"
 import Web3 from "web3"
 import { MARKETPLACE_ABI, MARKETPLACE_ADDRESS, NFT_ABI, NFT_ADDRESS } from "../constants/Constants"
 import { mainAction } from "../redux/actions/mainActions"
-import { SET_MARKET_CONTRACT, SET_NFT_CONTRACT, SET_WALLET, SET_WEB3} from "../redux/type"
+import { SET_MARKET_CONTRACT, SET_NFT_CONTRACT, SET_NOTIFICATION, SET_WALLET, SET_WEB3} from "../redux/type"
 import Logo from "../assets/logo.png"
 import "../styles/header.css"
 
@@ -18,14 +18,13 @@ const Header = () => {
   const navigate = useNavigate()
 
   const handleExplore = () => { navigate('/explore') }
-
   const handleCreate = () => {
     if(typeof window.ethereum === 'undefined') {
-      alert("Please install Metamask")
+      dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Please install Metamask', type: 'error' }})
       return
     }
     if(wallet === null) {
-      alert("Please connect Wallet")
+      dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Please connect Metamask', type: 'error' }})
       return
     }
     navigate('/create')
@@ -34,7 +33,7 @@ const Header = () => {
   const handleWallet = async () => {
     if(typeof window.ethereum === 'undefined') {
       dispatch({ type: SET_WEB3, payload: new Web3(BSC_PROVIDER) })
-      alert("Pls install metamask")
+      dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Please install Metamask', type: 'error' }})
       return
     }
     await window.ethereum.request({ method: "eth_requestAccounts" })
