@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
+import { SET_NOTIFICATION } from "../redux/type"
 import "../styles/Hero.css"
 
 const useWindowSize = () => {
@@ -35,10 +36,7 @@ const Hero = () => {
     }
     navigate("/create")
   }
-
-  const goMine = () => {
-    
-  }
+  const goMine = () => { navigate('/mynfts') }
 
   return (
     <div id="hero">

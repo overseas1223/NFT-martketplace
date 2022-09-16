@@ -13,7 +13,7 @@ import {
   PINATA_API_JSON_URL,
   NFT_ADDRESS
 } from "../constants/Constants"
-import { SET_LOADING } from "../redux/type"
+import { SET_LOADING, SET_NOTIFICATION } from "../redux/type"
 import "../styles/Create.css"
 
 let decimal = 10 ** 18
@@ -21,9 +21,8 @@ let decimal = 10 ** 18
 const Create = () => {
   const dispatch = useDispatch()
   const state = useSelector(state => state.main)
-  const { wallet, web3Instance, balance, nftContract, marketContract } = state
+  const { wallet, web3Instance, balance, nftContract, marketContract, listingPrice } = state
   const fileInputRef = useRef(null)
-  const [listingPrice, setListingPrice] = useState(0)
   const [uploadFile, setUploadFile] = useState(null)
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
@@ -33,11 +32,6 @@ const Create = () => {
     const { files } = e.target
     const loadFile = Object.assign(files[0], { preview: URL.createObjectURL(files[0]) })
     setUploadFile(loadFile)
-  }
-
-  const getListingPrice = async () => {
-    const price = await marketContract.methods.getListingPrice().call()
-    setListingPrice(Number(price) / decimal)
   }
 
   const createNewNFT = async () => {
@@ -109,7 +103,7 @@ const Create = () => {
   }
 
   useEffect(() => {
-    if(marketContract) getListingPrice()
+    if(marketContract) dispatch(mainAction.getListingPrice(marketContract))
   }, [marketContract])
 
   return (

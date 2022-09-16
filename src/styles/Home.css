@@ -4,10 +4,6 @@ body {
 
 #home {
   height: 100vh;
-  /* border: .001px solid green; */
-  /* display:flex;
-    flex-direction:column;
-    align-items:center; */
   text-align: center;
 }
 
@@ -25,7 +21,6 @@ a {
 }
 
 #list-container {
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
   align-items: center;

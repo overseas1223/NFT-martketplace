@@ -8,11 +8,13 @@ const INITIAL_STATE = {
   nftContract: null,
   marketContract: null,
   marketItems: [],
+  mineItems: [],
   notification: {
     notify: false,
     text: '',
     type: '',
-  }
+  },
+  listingPrice: 0
 }
 
 const mainReducer = (state = INITIAL_STATE, action) => {
@@ -48,6 +50,11 @@ const mainReducer = (state = INITIAL_STATE, action) => {
         ...state,
         marketItems: payload
       }
+    case actionTypes.SET_MINE_ITEMS:
+      return {
+        ...state,
+        mineItems: payload
+      }
     case actionTypes.SET_LOADING:
       return {
         ...state,
@@ -57,6 +64,11 @@ const mainReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         notification: payload
+      }
+    case actionTypes.SET_LISTINGPRICE:
+      return {
+        ...state,
+        listingPrice: payload
       }
     case actionTypes.NOTIFICATION_INITIAL:
       return {

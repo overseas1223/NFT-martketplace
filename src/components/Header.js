@@ -18,6 +18,7 @@ const Header = () => {
   const navigate = useNavigate()
 
   const handleExplore = () => { navigate('/explore') }
+  const handleMyNfts = () => { navigate('/mynfts') }
   const handleCreate = () => {
     if(typeof window.ethereum === 'undefined') {
       dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Please install Metamask', type: 'error' }})
@@ -86,7 +87,7 @@ const Header = () => {
       <Link to='/' id='logo'><img src={Logo} alt="log" /></Link>
       <div id="link-containers">
         <a onClick={handleExplore}>Explore</a>
-        {wallet && <a>My NFTs</a>}
+        {wallet && <a onClick={handleMyNfts}>My NFTs</a>}
         <a onClick={handleCreate}>Create</a>
         <button id="connect-wallet" onClick={handleWallet} >{wallet ? `${wallet.substring(0, 9).toUpperCase()}...${wallet.substring(wallet.length - 4).toUpperCase()}` : 'Connect Wallet'}</button>
       </div>

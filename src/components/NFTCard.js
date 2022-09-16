@@ -7,7 +7,7 @@ import { Colors } from "../constants/Colors"
 import { useARStatus } from "../hooks/isARStatus"
 import "../styles/NFTCard.css"
 
-const NFTCard = ({ nftName, price, nftSrc, onClick }) => {
+const NFTCard = ({ nftName, price, nftSrc, onClick, mode }) => {
   const [colors, setColors] = useState([])
   const isARSupport = useARStatus(nftSrc)
 
@@ -37,7 +37,7 @@ const NFTCard = ({ nftName, price, nftSrc, onClick }) => {
           </div>
         </div>
         <div className="buttons">
-          <Button color={Colors.buttons.primary} textContent="Buy Now" onClick={onClick} />
+          <Button color={Colors.buttons.primary} textContent={ mode ? "Sell" : "Buy Now" } onClick={onClick} />
         </div>
       </>}>
     </Card>
