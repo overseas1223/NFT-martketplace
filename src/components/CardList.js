@@ -15,10 +15,7 @@ const CardList = ({ list, type="horizontal", mode }) => {
           nftSrc={item.src}
           nftName={item.name}
           price={item.price}
-          onClick={()=>{ 
-            if(mode) navigate('/detail',{state: { item: item, type: true}})
-            else navigate('/detail',{state: { item: item, type: false}})
-          }}
+          onClick={()=>{ navigate('/detail',{state: { item: item, type: mode}})}}
         />
       ))}
     </div>

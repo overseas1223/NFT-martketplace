@@ -30,7 +30,7 @@ const Hero = () => {
       dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Please install Metamask', type: 'error' }})
       return
     }
-    if(wallet) {
+    if(wallet === null) {
       dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Please connect Metamask', type: 'error' }})
       return
     }

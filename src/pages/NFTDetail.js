@@ -94,11 +94,11 @@ const NFTDetail = () => {
           height={width < 1000 ? "800px" : "55vh"}
           blurColor={colors[0]}
           child={
-            !state.mode ?
+            state.type ?
             <div id="detail-content">
              {isARSupport ? <model-viewer ar-scale="auto" ar ar-modes="webxr scene-viewer quick-look" id="arDetail" loading="eager" camera-controls auto-rotate src={state.item.src} > </model-viewer> 
              : <> <ColorExtractor getColors={getColors}>
-                <img id="detail-image" src={state.item.src} />
+                <img id="detail-image" src={state.item.src} alt="nft detail"/>
               </ColorExtractor></>}
               <div id="detail-info">
                 <div id='detail-info-container'>
@@ -132,7 +132,7 @@ const NFTDetail = () => {
             <div id="detail-content">
              {isARSupport ? <model-viewer ar-scale="auto" ar ar-modes="webxr scene-viewer quick-look" id="arDetail" loading="eager" camera-controls auto-rotate src={state.item.src} > </model-viewer> 
              : <> <ColorExtractor getColors={getColors}>
-                <img id="detail-image" src={state.item.src} />
+                <img id="detail-image" src={state.item.src} alt="nft detail"/>
               </ColorExtractor></>}
               <div id="detail-info">
                 <div id='detail-info-container'>
