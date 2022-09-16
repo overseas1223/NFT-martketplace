@@ -44,7 +44,7 @@ const Hero = () => {
       <h1 id="header-text-second"> Gateway To The Metaverse </h1>
       <div id="hero-buttons">
         <button id="explore" onClick={goExplore}>Explore</button>
-        {width < 900 && <button id="mine" onClick={goMine}>My NFTs</button>}
+        {(width < 900 && wallet) && <button id="mine" onClick={goMine}>My NFTs</button>}
         <button id="create" onClick={goCreate}>Create</button>
       </div>
     </div>

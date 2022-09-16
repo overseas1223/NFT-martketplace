@@ -77,6 +77,7 @@ const Header = () => {
         if (!(accounts && accounts.length > 0)) {
           localStorage.clear()
           dispatch({ type: SET_WALLET, payload: null})
+          navigate('/')
         }
       })
     }

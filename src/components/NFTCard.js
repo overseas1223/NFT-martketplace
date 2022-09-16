@@ -32,7 +32,7 @@ const NFTCard = ({ nftName, price, nftSrc, onClick, mode }) => {
             <p className="price-label">Price</p>
             <p className="price">
               {" "}
-              <SiBinance /> {price}
+              <SiBinance size="13px"/> {price}
             </p>
           </div>
         </div>
