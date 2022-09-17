@@ -3,8 +3,8 @@ const PINATA_SECRET_API_KEY = "b1136711a25f07948bd6d36da2be31b0669ab70d1864d38ff
 const PINATA_API_FILE_URL = 'https://api.pinata.cloud/pinning/pinFileToIPFS'
 const PINATA_API_JSON_URL = 'https://api.pinata.cloud/pinning/pinJSONToIPFS'
 const PINATA_BASE_URL = 'https://gateway.pinata.cloud/ipfs/'
-const NFT_ADDRESS = '0x77dF5A3dC12F951963Ae33D0D6d05aDCC884Bf5F'
-const MARKETPLACE_ADDRESS = '0x6934458c0c4BB89A138BC6Aa8aD89021A12Ce91C'
+const NFT_ADDRESS = '0xC9f4031Cf541eA2c2795C891708eE11cA78DD858'
+const MARKETPLACE_ADDRESS = '0xF67a8e21552adb43Bb20Aeed894F8dc66CDdef22'
 const NFT_ABI = [
   {
     "inputs": [
@@ -735,6 +735,19 @@ const MARKETPLACE_ABI = [
         "internalType": "struct NFTMarketplace.MarketItem",
         "name": "",
         "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getResellPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

@@ -15,6 +15,7 @@ const INITIAL_STATE = {
     type: '',
   },
   listingPrice: 0,
+  resellPrice: 0,
   categories: []
 }
 
@@ -70,6 +71,11 @@ const mainReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         listingPrice: payload
+      }
+    case actionTypes.SET_RESELLPRICE:
+      return {
+        ...state,
+        resellPrice: payload
       }
     case actionTypes.SET_CATEGORY:
       return {

@@ -7,7 +7,7 @@ import TextInput from "../components/base/TextInput"
 import Select from "../components/base/Select"
 import Button from "../components/base/Button"
 import { SET_NOTIFICATION, SET_LOADING } from "../redux/type"
-import { PINATA_API_KEY, PINATA_API_JSON_URL, PINATA_SECRET_API_KEY } from "../constants/Constants"
+import { PINATA_API_KEY, PINATA_API_JSON_URL, PINATA_SECRET_API_KEY, PINATA_BASE_URL } from "../constants/Constants"
 import '../styles/List.css'
 
 const List = () => {
@@ -73,15 +73,14 @@ const List = () => {
         tokenId,
         Web3.utils.toWei(String(price), 'ether'),
         category,
-        jsonHash,
+        `${PINATA_BASE_URL}${jsonHash}`,
         0,
         0
       ).send({ from: wallet, value: Web3.utils.toWei(String(listingPrice), 'ether')})
-      dispatch({ type: SET_LOADING, payload: true })
       navigate("/explore")
     } catch (err) {
       console.log(err)
-      dispatch({ type: SET_LOADING, payload: true })
+      dispatch({ type: SET_LOADING, payload: false })
     }
   }
 
