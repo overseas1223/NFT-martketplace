@@ -34,9 +34,10 @@ const Hero = () => {
       dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Please connect Metamask', type: 'error' }})
       return
     }
-    navigate("/create")
+    navigate("/mint")
   }
   const goMine = () => { navigate('/mynfts') }
+  const goList = () => { navigate('/list') }
 
   return (
     <div id="hero">
@@ -45,7 +46,8 @@ const Hero = () => {
       <div id="hero-buttons">
         <button id="explore" onClick={goExplore}>Explore</button>
         {(width < 900 && wallet) && <button id="mine" onClick={goMine}>My NFTs</button>}
-        <button id="create" onClick={goCreate}>Create</button>
+        {(width < 900 && wallet) && <button id="mine" onClick={goList}>List</button>}
+        <button id="create" onClick={goCreate}>Mint</button>
       </div>
     </div>
   );

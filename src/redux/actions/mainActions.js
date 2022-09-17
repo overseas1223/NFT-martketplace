@@ -1,4 +1,4 @@
-import { SET_BALANCE, SET_LISTINGPRICE, SET_LOADING, SET_MARKET_ITEMS, SET_MINE_ITEMS } from "../type"
+import { SET_BALANCE, SET_CATEGORY, SET_LISTINGPRICE, SET_LOADING, SET_MARKET_ITEMS, SET_MINE_ITEMS } from "../type"
 import axios from "axios"
 
 let decimal = 10 ** 18
@@ -9,9 +9,13 @@ export const mainAction = {
         dispatch({ type: SET_BALANCE, payload: Number(balance) / decimal })
     },
 
-    getListingPrice: (marketContract) => async (dispatch) => {
-        const price = await marketContract.methods.getListingPrice().call()
-        dispatch({ type: SET_LISTINGPRICE, payload: Number(price) / decimal})
+    getInitialValue: (marketContract) => async (dispatch) => {
+        const result = await Promise.all([
+            marketContract.methods.getListingPrice().call(),
+            marketContract.methods.getCategories().call()
+        ])
+        dispatch({ type: SET_LISTINGPRICE, payload: Number(result[0]) / decimal})
+        dispatch({ type: SET_CATEGORY, payload: result[1] })
     },
 
     getMarketItems: (marketContract) => async (dispatch) => {

@@ -1,4 +1,4 @@
-#explore h1 {
+#List h1 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,11 +10,16 @@
     margin-bottom: 40px !important;
 }
 
-#list-container {
+#list-inputs {
     /* border: 1px solid red; */
     display: flex;
     flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content:center;
     margin-bottom: 100px;
+}
+
+.input-text {
+    margin-bottom: 20px;
 }

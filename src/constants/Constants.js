@@ -3,8 +3,8 @@ const PINATA_SECRET_API_KEY = "b1136711a25f07948bd6d36da2be31b0669ab70d1864d38ff
 const PINATA_API_FILE_URL = 'https://api.pinata.cloud/pinning/pinFileToIPFS'
 const PINATA_API_JSON_URL = 'https://api.pinata.cloud/pinning/pinJSONToIPFS'
 const PINATA_BASE_URL = 'https://gateway.pinata.cloud/ipfs/'
-const NFT_ADDRESS = '0x857bCd8abACffE9072e4881Bc827564262f5124f'
-const MARKETPLACE_ADDRESS = '0x68508441DF38998118b7ab9Db48E837A2bF9362b'
+const NFT_ADDRESS = '0x77dF5A3dC12F951963Ae33D0D6d05aDCC884Bf5F'
+const MARKETPLACE_ADDRESS = '0x6934458c0c4BB89A138BC6Aa8aD89021A12Ce91C'
 const NFT_ABI = [
   {
     "inputs": [
@@ -135,11 +135,6 @@ const NFT_ABI = [
         "internalType": "string",
         "name": "tokenURI",
         "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "metaData",
-        "type": "string"
       }
     ],
     "name": "createNFT",
@@ -167,19 +162,6 @@ const NFT_ABI = [
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getCurrentId",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -350,25 +332,6 @@ const NFT_ABI = [
         "type": "uint256"
       }
     ],
-    "name": "tokenMetaData",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
     "name": "tokenURI",
     "outputs": [
       {
@@ -414,6 +377,19 @@ const MARKETPLACE_ABI = [
   {
     "inputs": [
       {
+        "internalType": "string",
+        "name": "category",
+        "type": "string"
+      }
+    ],
+    "name": "addCategory",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "nftContract",
         "type": "address"
@@ -426,6 +402,26 @@ const MARKETPLACE_ABI = [
       {
         "internalType": "uint256",
         "name": "price",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "category",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_metadata",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_itemId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "mode",
         "type": "uint256"
       }
     ],
@@ -494,6 +490,11 @@ const MARKETPLACE_ABI = [
             "type": "string"
           },
           {
+            "internalType": "string",
+            "name": "category",
+            "type": "string"
+          },
+          {
             "internalType": "uint256",
             "name": "price",
             "type": "uint256"
@@ -551,6 +552,11 @@ const MARKETPLACE_ABI = [
           {
             "internalType": "string",
             "name": "metadataURL",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "category",
             "type": "string"
           },
           {
@@ -614,6 +620,11 @@ const MARKETPLACE_ABI = [
             "type": "string"
           },
           {
+            "internalType": "string",
+            "name": "category",
+            "type": "string"
+          },
+          {
             "internalType": "uint256",
             "name": "price",
             "type": "uint256"
@@ -627,6 +638,19 @@ const MARKETPLACE_ABI = [
         "internalType": "struct NFTMarketplace.MarketItem[]",
         "name": "",
         "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getCategories",
+    "outputs": [
+      {
+        "internalType": "string[]",
+        "name": "",
+        "type": "string[]"
       }
     ],
     "stateMutability": "view",
@@ -693,6 +717,11 @@ const MARKETPLACE_ABI = [
             "type": "string"
           },
           {
+            "internalType": "string",
+            "name": "category",
+            "type": "string"
+          },
+          {
             "internalType": "uint256",
             "name": "price",
             "type": "uint256"
@@ -714,12 +743,38 @@ const MARKETPLACE_ABI = [
   {
     "inputs": [
       {
+        "internalType": "string[]",
+        "name": "_categories",
+        "type": "string[]"
+      }
+    ],
+    "name": "setCategories",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "price",
         "type": "uint256"
       }
     ],
     "name": "setListingPrice",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      }
+    ],
+    "name": "setResellPrice",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

@@ -14,7 +14,8 @@ const INITIAL_STATE = {
     text: '',
     type: '',
   },
-  listingPrice: 0
+  listingPrice: 0,
+  categories: []
 }
 
 const mainReducer = (state = INITIAL_STATE, action) => {
@@ -69,6 +70,11 @@ const mainReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         listingPrice: payload
+      }
+    case actionTypes.SET_CATEGORY:
+      return {
+        ...state,
+        categories: payload
       }
     case actionTypes.NOTIFICATION_INITIAL:
       return {

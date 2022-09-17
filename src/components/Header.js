@@ -14,11 +14,12 @@ const BSC_PROVIDER = 'https://data-seed-prebsc-1-s1.binance.org:8545'
 const Header = () => {
   const dispatch = useDispatch()
   const state = useSelector(state => state.main)
-  const { wallet, web3Instance } = state
+  const { wallet, web3Instance, marketContract } = state
   const navigate = useNavigate()
 
   const handleExplore = () => { navigate('/explore') }
   const handleMyNfts = () => { navigate('/mynfts') }
+  const handleList = () => { navigate('/list') }
   const handleCreate = () => {
     if(typeof window.ethereum === 'undefined') {
       dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Please install Metamask', type: 'error' }})
@@ -28,7 +29,7 @@ const Header = () => {
       dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Please connect Metamask', type: 'error' }})
       return
     }
-    navigate('/create')
+    navigate('/mint')
   }
 
   const handleWallet = async () => {
@@ -64,6 +65,8 @@ const Header = () => {
     }
   }, [web3Instance, wallet])
 
+  useEffect(() => { if(marketContract) dispatch(mainAction.getInitialValue(marketContract)) }, [marketContract])
+
   useEffect(() => {
     const address = localStorage.getItem('wallet')
     if(address) {
@@ -89,7 +92,8 @@ const Header = () => {
       <div id="link-containers">
         <a onClick={handleExplore}>Explore</a>
         {wallet && <a onClick={handleMyNfts}>My NFTs</a>}
-        <a onClick={handleCreate}>Create</a>
+        {wallet && <a onClick={handleList}>List</a>}
+        <a onClick={handleCreate}>Mint</a>
         <button id="connect-wallet" onClick={handleWallet} >{wallet ? `${wallet.substring(0, 9).toUpperCase()}...${wallet.substring(wallet.length - 4).toUpperCase()}` : 'Connect Wallet'}</button>
       </div>
     </div>
