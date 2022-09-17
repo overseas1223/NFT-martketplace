@@ -16,7 +16,7 @@ const Layout = ({ child }) => {
       if(notification.type === "success") NotificationManager.success(notification.text, 'Success', 3000)
       dispatch({ type: NOTIFICATION_INITIAL })
     }
-  }, [notification])
+  }, [notification, dispatch])
 
   return (
     <div>

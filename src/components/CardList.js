@@ -7,7 +7,7 @@ const CardList = ({ list, type="horizontal", mode }) => {
   let navigate = useNavigate()
 
   return (
-    <div id="card-list" style={{flexDirection:type=="horizontal" ? "row" : "column"}}>
+    <div id="card-list" style={{flexDirection:type === "horizontal" ? "row" : "column"}}>
       {list.map((item,index) => (
         <NFTCard
           mode={mode}

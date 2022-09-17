@@ -83,7 +83,7 @@ const NFTDetail = () => {
   useEffect(() => { setColors([]) }, [state])
   useEffect(() => {
     if(marketContract) dispatch(mainAction.getListingPrice(marketContract))
-  }, [marketContract])
+  }, [marketContract, dispatch])
 
   return (
     <div>

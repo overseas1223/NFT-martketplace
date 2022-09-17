@@ -18,7 +18,7 @@ const Explore = () => {
 
   useEffect(() => {
     if(marketContract) dispatch(mainAction.getMarketItems(marketContract))
-  }, [marketContract])
+  }, [marketContract, dispatch])
 
   return (
     <div id="explore">
@@ -28,7 +28,7 @@ const Explore = () => {
         <CardList list={SearchItems(text)} mode={false} />
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Explore;

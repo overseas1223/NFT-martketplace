@@ -13,7 +13,7 @@ const MyNFTS = () => {
 
   useEffect(() => {
     if(marketContract) dispatch(mainAction.getMyNFTItems(marketContract, wallet))
-  }, [marketContract])
+  }, [marketContract, dispatch, wallet])
 
   return (
     <div id="mynft">

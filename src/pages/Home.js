@@ -12,7 +12,7 @@ const Home = () => {
 
   useEffect(() => {
     if(marketContract) dispatch(mainAction.getMarketItems(marketContract))
-  }, [marketContract])
+  }, [marketContract, dispatch])
 
   return (
     <div id="home">

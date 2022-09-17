@@ -63,9 +63,9 @@ const Header = () => {
       dispatch({ type: SET_NFT_CONTRACT, payload: new web3Instance.eth.Contract(NFT_ABI, NFT_ADDRESS) })
       dispatch({ type: SET_MARKET_CONTRACT, payload: new web3Instance.eth.Contract(MARKETPLACE_ABI, MARKETPLACE_ADDRESS) })
     }
-  }, [web3Instance, wallet])
+  }, [web3Instance, wallet, dispatch])
 
-  useEffect(() => { if(marketContract) dispatch(mainAction.getInitialValue(marketContract)) }, [marketContract])
+  useEffect(() => { if(marketContract) dispatch(mainAction.getInitialValue(marketContract)) }, [marketContract, dispatch])
 
   useEffect(() => {
     const address = localStorage.getItem('wallet')
@@ -84,7 +84,7 @@ const Header = () => {
         }
       })
     }
-  }, [])
+  }, [dispatch, navigate])
 
   return (
       <div id="header">

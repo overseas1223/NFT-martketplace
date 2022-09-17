@@ -9,8 +9,8 @@ export const useARStatus = (data) => {
 
   useEffect(() => {
     let src = data.split('.')
-    if (src[src.length - 1] == "glb") update(true)
-  }, [isSupport])
+    if (src[src.length - 1] === "glb") update(true)
+  }, [isSupport, data])
 
   return isSupport
 }

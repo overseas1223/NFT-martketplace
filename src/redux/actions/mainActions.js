@@ -22,6 +22,7 @@ export const mainAction = {
         try {
             dispatch({ type: SET_LOADING, payload: true})
             const items = await marketContract.methods.fetchMarketItems().call()
+            console.log(items)
             let metaFuncs = []
             items.forEach((item) => { metaFuncs.push(axios.get(item.metadataURL)) })
             const results = await Promise.all(metaFuncs)
