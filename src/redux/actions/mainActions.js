@@ -1,5 +1,6 @@
-import { SET_BALANCE, SET_CATEGORY, SET_LISTINGPRICE, SET_LOADING, SET_MARKET_ITEMS, SET_MINE_ITEMS, SET_RESELLPRICE } from "../type"
+import { SET_BALANCE, SET_BOUGHTITEMS, SET_CATEGORY, SET_LISTINGPRICE, SET_LOADING, SET_MARKET_ITEMS, SET_MINE_ITEMS, SET_RESELLPRICE } from "../type"
 import axios from "axios"
+import { MORALIS_API_KEY } from "../../constants/Constants"
 
 let decimal = 10 ** 18
 
@@ -36,7 +37,8 @@ export const mainAction = {
                     description: result.data.description,
                     src: items[index].imgURL,
                     price: Number(items[index].price) / decimal,
-                    tokenId: items[index].tokenId
+                    tokenId: items[index].tokenId,
+                    category: items[index].category
                 })
             })
             dispatch({ type: SET_MARKET_ITEMS, payload: marketItems })
@@ -63,14 +65,33 @@ export const mainAction = {
                     description: result.data.description,
                     src: items[index].imgURL,
                     price: Number(items[index].price) / decimal,
-                    tokenId: items[index].tokenId
+                    tokenId: items[index].tokenId,
+                    category: items[index].category,
+                    metaData: items[index].metadataURL
                 })
             })
-            dispatch({ type: SET_MINE_ITEMS, payload: marketItems })
+            dispatch({ type: SET_BOUGHTITEMS, payload: marketItems })
             dispatch({ type: SET_LOADING, payload: false})
         } catch (err) {
             console.log(err)
             dispatch({ type: SET_LOADING, payload: false})
+        }
+    },
+
+    getNFTsFromWallet: (wallet) => async (dispatch) => {
+        try {
+            dispatch({ type: SET_LOADING, payload: true })
+            const response = await axios.get(`https://deep-index.moralis.io/api/v2/${wallet}/nft?chain=0x61&format=decimal`,{
+                headers: {
+                    accept: 'application/json',
+                    'X-API-Key': MORALIS_API_KEY
+                }
+            })
+            dispatch({ type: SET_MINE_ITEMS, payload: response.data.result })
+            dispatch({ type: SET_LOADING, payload: false })
+        } catch (err) {
+            console.log(err)
+            dispatch({ type: SET_LOADING, payload: false })
         }
     }
 }

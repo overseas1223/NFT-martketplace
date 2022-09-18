@@ -19,9 +19,12 @@ const NFTCard = ({ nftName, price, nftSrc, onClick, mode }) => {
     <Card
       blurColor={colors[0]}
       child={<>
-        {isARSupport ? <model-viewer ar-scale="auto" ar ar-modes="webxr scene-viewer quick-look" id="reveal" loading="eager" camera-controls auto-rotate src={nftSrc} > </model-viewer> : <><ColorExtractor getColors={getColors}>
-          <img className="nft-image" src={nftSrc} alt="MFT" />
-        </ColorExtractor></>}
+        {isARSupport ? 
+          <model-viewer ar-scale="auto" ar ar-modes="webxr scene-viewer quick-look" id="reveal" loading="eager" camera-controls auto-rotate src={nftSrc} > </model-viewer> : 
+          <ColorExtractor getColors={getColors}>
+            <img className="nft-image" src={nftSrc} alt="MFT" />
+          </ColorExtractor>
+        }
         <div className="wrapper">
           <div className="info-container">
             <p className="owner">Name</p>

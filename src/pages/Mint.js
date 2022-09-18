@@ -3,6 +3,7 @@ import axios from "axios"
 import { useSelector, useDispatch } from "react-redux"
 import Button from "../components/base/Button"
 import Image from "../components/base/Image"
+import { useARStatus } from "../hooks/isARStatus"
 import { mainAction } from "../redux/actions/mainActions"
 import { PINATA_API_KEY, PINATA_SECRET_API_KEY, PINATA_API_FILE_URL, } from "../constants/Constants"
 import { SET_LOADING, SET_NOTIFICATION } from "../redux/type"
@@ -14,6 +15,7 @@ const Create = () => {
   const { wallet, web3Instance, nftContract } = state
   const fileInputRef = useRef(null)
   const [uploadFile, setUploadFile] = useState(null)
+  const isARSupport = useARStatus('')
 
   const handleUpload = (e) => {
     const { files } = e.target
@@ -58,11 +60,13 @@ const Create = () => {
       <div className="main-body">
         <h1>NFT Mint</h1>
         <div className="image-upload" onClick={() => { fileInputRef.current.click() }}>
+        {
           <Image
             src={uploadFile ? uploadFile.preview : null}
             width={'350px'}
             height={'270px'}
           />
+        }
         </div>
         <input
           type="file"

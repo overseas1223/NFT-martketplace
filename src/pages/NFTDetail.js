@@ -10,7 +10,6 @@ import { SiBinance } from "react-icons/si"
 import { useARStatus } from "../hooks/isARStatus"
 import { NFT_ADDRESS } from "../constants/Constants"
 import { SET_LOADING, SET_NOTIFICATION } from "../redux/type"
-import { mainAction } from "../redux/actions/mainActions"
 import "../styles/NFTDetail.css"
 
 const useWindowSize = () => {
@@ -31,7 +30,7 @@ const NFTDetail = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const main = useSelector(state => state.main)
-  const { balance, marketContract, wallet, listingPrice } = main
+  const { balance, marketContract, wallet, resellPrice } = main
   const [colors, setColors] = useState([])
   const { state } = useLocation()
   const [price, setPrice] = useState("")
@@ -65,15 +64,27 @@ const NFTDetail = () => {
 
   const sellNFT = async () => {
     try {
-      if(listingPrice > balance) {
+      if(price === '') {
+        dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Price is required', type: 'error' }})
+        return
+      }
+      if(resellPrice > balance) {
         dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Balance is insufficient', type: 'error' }})
         return
       }
       dispatch({ type: SET_LOADING, payload: true})
-      await marketContract.methods.createMarketItem(NFT_ADDRESS, state.item.tokenId, Web3.utils.toWei(String(price), 'ether')).send({ from: wallet, value: Web3.utils.toWei(String(listingPrice), 'ether')})
+      await marketContract.methods.createMarketItem(
+        NFT_ADDRESS,
+        state.item.tokenId,
+        Web3.utils.toWei(String(price), 'ether'),
+        state.item.category,
+        state.item.metaData,
+        state.item.id,
+        1
+      ).send({ from: wallet, value: Web3.utils.toWei(String(resellPrice), 'ether')})
       dispatch({ type: SET_LOADING, payload: false})
       dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Listed NFT successfully', type: 'success' }})
-      navigate('/expore')
+      navigate('/explore')
     } catch (err) {
       console.log(err)
       dispatch({ type: SET_LOADING, payload: false})
@@ -81,9 +92,6 @@ const NFTDetail = () => {
   }
 
   useEffect(() => { setColors([]) }, [state])
-  useEffect(() => {
-    if(marketContract) dispatch(mainAction.getListingPrice(marketContract))
-  }, [marketContract, dispatch])
 
   return (
     <div>
@@ -103,6 +111,7 @@ const NFTDetail = () => {
               <div id="detail-info">
                 <div id='detail-info-container'>
                   <p id="name"> {state.item.name} </p>
+                  <p id="category">Category: {state.item.category} </p>
                   <p id="collection">Price: &nbsp;&nbsp;&nbsp;<SiBinance size="12px" />&nbsp;{state.item.price} </p>
                   <p id="description" > {state.item.description} </p>
                 </div>
@@ -137,6 +146,7 @@ const NFTDetail = () => {
               <div id="detail-info">
                 <div id='detail-info-container'>
                   <p id="name"> {state.item.name} </p>
+                  <p id="category">Category: {state.item.category} </p>
                   <p id="description" > {state.item.description} </p>
                 </div>
                 <div id="detail-controls">
