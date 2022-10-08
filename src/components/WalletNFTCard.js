@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react"
-import { SiBinance } from "react-icons/si"
 import { ColorExtractor } from 'react-color-extractor'
 import ReactPlayer from "react-player"
 import Card from "./base/Card"
-import Button from "./base/Button"
-import { Colors } from "../constants/Colors"
 import "../styles/NFTCard.css"
 
-const NFTCard = ({ nftName, price, nftSrc, onClick, mode }) => {
+const WalletNFTCard = ({ nftName, number, nftSrc }) => {
   const [colors, setColors] = useState([])
   const [type, setType] = useState(null)
+  const [src, setSrc] = useState(nftSrc.replace(/^.{28}/g, 'https://gateway.moralisipfs.com'))
   const getColors = colors => {
     setColors(c => [...c, ...colors])
   }
@@ -36,50 +34,36 @@ const NFTCard = ({ nftName, price, nftSrc, onClick, mode }) => {
   return (
     <Card
       blurColor={colors[type ? type : 0]}
+      height={'210px'}
       child={
         <>
           {type === 1 ?
             <ColorExtractor getColors={getColors}>
-              <img className="nft-image" src={nftSrc} alt="MFT" />
+              <img className="nft-image" src={src} alt="MFT" />
             </ColorExtractor>
             : type === 2 ?
               <ReactPlayer
+                className="nft-react-player"
                 width={240}
                 height={170}
-                url={nftSrc}
+                url={src}
                 controls
               />
               : type === 3 ?
                 <div className="nft-3d-wrapper">
                   <model-viewer
-                    className="nft-3d"
                     ar-scale="auto"
                     ar ar-modes="webxr scene-viewer quick-look"
+                    className="nft-3d"
                     loading="eager"
-                    camera-controls auto-rotate src={nftSrc} ></model-viewer>
+                    camera-controls auto-rotate src={src} ></model-viewer>
                 </div>
                 : <div></div>
           }
-          <div className="wrapper">
-            <div className="info-container">
-              <p className="owner">Name</p>
-              <p className="name">{nftName}</p>
-            </div>
-
-            <div className="price-container">
-              <p className="price-label">Price</p>
-              <p className="price">
-                {" "}
-                <SiBinance size="13px" /> {price}
-              </p>
-            </div>
-          </div>
-          <div className="buttons">
-            <Button color={Colors.buttons.primary} textContent={mode ? "Sell" : "Buy Now"} onClick={onClick} />
-          </div>
+          <div className="nft-name"><span>{nftName}#{number}</span></div>
         </>}>
     </Card>
   )
 }
 
-export default NFTCard
+export default WalletNFTCard

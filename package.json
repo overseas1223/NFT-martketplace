@@ -6,6 +6,8 @@
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
     "framer-motion": "^4.1.17",
+    "ipfs-core": "^0.16.1",
+    "node-polyfill-webpack-plugin": "^2.0.1",
     "react": "16.11.0",
     "react-click-away-listener": "^2.0.5",
     "react-color-extractor": "^1.1.2",

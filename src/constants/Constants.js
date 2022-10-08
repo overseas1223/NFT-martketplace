@@ -1,10 +1,10 @@
-const PINATA_API_KEY = '0aa412d2c45e13b2ae89';
+const PINATA_API_KEY = '0aa412d2c45e13b2ae89'
 const PINATA_SECRET_API_KEY = "d84c65524e3120c482ecbff1205b2bfa178e73fb5716dfdee99cdd7366f03d36"
 const PINATA_API_FILE_URL = 'https://api.pinata.cloud/pinning/pinFileToIPFS'
 const PINATA_API_JSON_URL = 'https://api.pinata.cloud/pinning/pinJSONToIPFS'
 const PINATA_BASE_URL = 'https://gateway.pinata.cloud/ipfs/'
-const NFT_ADDRESS = '0xcfe8955821d1BA267E854b6f45bcE53b17EF47C4'
-const MARKETPLACE_ADDRESS = '0x517A42f2448f287EA87683587d4C0d7a448173B7'
+const NFT_ADDRESS = '0x26f53dC2c90884F8379E3f59dbb0c8d3748097BC'
+const MARKETPLACE_ADDRESS = '0x94B4d14B7cB1A5a3bB9895Fdaf7f3D5142C323C7'
 const MORALIS_API_KEY = 'mB4j3v1syyg5ADkysVSwumoCzu2ui8vWP4KrMvcyJkbZIGBYE5cJ3l9r9oNuGQow'
 const NFT_ABI = [
   {

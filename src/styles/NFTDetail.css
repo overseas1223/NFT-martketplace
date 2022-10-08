@@ -30,6 +30,12 @@
     object-fit:cover;
     border-radius:30px;
 }
+
+#detail-video {
+    width:60% !important;
+    height:100% !important;
+}
+
 model-viewer#arDetail{
     width:60%;
     height:100%;

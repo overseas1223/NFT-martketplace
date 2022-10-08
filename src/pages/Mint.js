@@ -43,7 +43,7 @@ const Create = () => {
   const createNewNFT = async () => {
     try {
       if (uploadFile === null) {
-        dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Image is required', type: 'error' } })
+        dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'File is required', type: 'error' } })
         return
       }
 
@@ -61,11 +61,12 @@ const Create = () => {
       })
 
       const fileHash = response.data.IpfsHash
-      await nftContract.methods.createNFT(fileHash).send({ from: wallet })
+      await nftContract.methods.createNFT(`${fileHash}?type=${fileType}`).send({ from: wallet })
       dispatch({ type: SET_NOTIFICATION, payload: { notify: true, text: 'Mint NFT successfully', type: 'success' } })
       dispatch({ type: SET_LOADING, payload: false })
       dispatch(mainAction.getBalanceOfBNB(web3Instance, wallet))
       setUploadFile(null)
+      setFileType(null)
     } catch (err) {
       console.log(err)
       dispatch({ type: SET_LOADING, payload: false })
@@ -97,7 +98,6 @@ const Create = () => {
                     width={350}
                     height={270}
                     url={uploadFile.preview}
-                    playing={true}
                     controls
                   />
                   :

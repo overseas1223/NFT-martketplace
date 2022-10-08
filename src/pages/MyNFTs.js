@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import CardList from "../components/CardList"
 import Button from "../components/base/Button"
-import Image from "../components/base/Image"
+import WalletNFTCard from "../components/WalletNFTCard"
 import { mainAction } from "../redux/actions/mainActions"
 import '../styles/MyNFTs.css'
 
@@ -11,7 +11,7 @@ const MyNFTS = () => {
   const main = useSelector(state => state.main)
   const { mineItems, marketContract, wallet, boughtItems } = main
   const [type, setType] = useState(1)
-
+  
   useEffect(() => {
     if(wallet) {
       if(type === 1) dispatch(mainAction.getNFTsFromWallet(wallet))
@@ -46,10 +46,7 @@ const MyNFTS = () => {
         {type === 1 ?
           <div className="wallet-nfts">
             {mineItems.filter((item) => item.token_uri.indexOf('https') !== -1).map((item, index) => (
-              <div key={index} className="nft-item">
-                <Image src={item.token_uri} width={'200px'} height={'160px'}/>
-                <span style={{ marginTop: '10px' }}>{item.name}#{item.token_id}</span>
-              </div>
+              <WalletNFTCard key={index} nftSrc={item.token_uri} number={item.token_id} nftName={item.name} />
             ))}
           </div>
           :
