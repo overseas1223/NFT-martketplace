@@ -23,6 +23,10 @@ const NFTCard = ({ nftName, price, nftSrc, onClick, mode }) => {
     return decodeURIComponent(results[2].replace(/\+/g, ' '))
   }
 
+  const openResetPriceModal = () => {
+    
+  }
+
   useEffect(() => {
     if (nftSrc.indexOf('ipfs') !== -1) {
       const res = getParameterByName('type', nftSrc)
@@ -75,7 +79,8 @@ const NFTCard = ({ nftName, price, nftSrc, onClick, mode }) => {
             </div>
           </div>
           <div className="buttons">
-            <Button color={Colors.buttons.primary} textContent={mode ? "Sell" : "Buy Now"} onClick={onClick} />
+            <Button color={Colors.buttons.primary} textContent={mode === 2 ? "Sell" : mode === 1 ? "Buy Now" : "Delist"} onClick={onClick} />
+            {mode === 3 && <>&nbsp;&nbsp;<Button color={Colors.buttons.primary} textContent={"Reset Price"} onClick={openResetPriceModal} /></>}
           </div>
         </>}>
     </Card>

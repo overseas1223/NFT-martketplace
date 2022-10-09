@@ -7,7 +7,6 @@ import "../styles/NFTCard.css"
 const WalletNFTCard = ({ nftName, number, nftSrc }) => {
   const [colors, setColors] = useState([])
   const [type, setType] = useState(null)
-  const [src, setSrc] = useState(nftSrc.replace(/^.{28}/g, 'https://gateway.moralisipfs.com'))
   const getColors = colors => {
     setColors(c => [...c, ...colors])
   }
@@ -39,14 +38,14 @@ const WalletNFTCard = ({ nftName, number, nftSrc }) => {
         <>
           {type === 1 ?
             <ColorExtractor getColors={getColors}>
-              <img className="nft-image" src={src} alt="MFT" />
+              <img className="nft-image" src={nftSrc} alt="MFT" />
             </ColorExtractor>
             : type === 2 ?
               <ReactPlayer
                 className="nft-react-player"
                 width={240}
                 height={170}
-                url={src}
+                url={nftSrc}
                 controls
               />
               : type === 3 ?
@@ -56,7 +55,7 @@ const WalletNFTCard = ({ nftName, number, nftSrc }) => {
                     ar ar-modes="webxr scene-viewer quick-look"
                     className="nft-3d"
                     loading="eager"
-                    camera-controls auto-rotate src={src} ></model-viewer>
+                    camera-controls auto-rotate src={nftSrc} ></model-viewer>
                 </div>
                 : <div></div>
           }

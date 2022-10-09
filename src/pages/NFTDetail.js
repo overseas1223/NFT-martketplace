@@ -121,7 +121,7 @@ const NFTDetail = () => {
           height={width < 900 ? "800px" : '500px'}
           blurColor={colors[0]}
           child={
-            state.type ?
+            state.type === 1 ?
               <div id="detail-content">
                 {type === 1 ?
                   <ColorExtractor getColors={getColors}>
@@ -171,47 +171,48 @@ const NFTDetail = () => {
                   </div>
                 </div>
               </div>
-              :
-              <div id="detail-content">
-                {type === 1 ?
-                  <ColorExtractor getColors={getColors}>
-                    <img id="detail-image" src={state.item.src} alt="nft detail" />
-                  </ColorExtractor>
-                  : type === 2 ?
-                    <ReactPlayer
-                      id="detail-video"
-                      url={state.item.src}
-                      controls
-                    /> :
-                    type === 3 ?
-                      <model-viewer
-                        ar-scale="auto"
-                        ar ar-modes="webxr scene-viewer quick-look"
-                        id="arDetail"
-                        loading="eager"
-                        camera-controls auto-rotate src={state.item.src} >
-                      </model-viewer> : <div></div>}
-                <div id="detail-info">
-                  <div id='detail-info-container'>
-                    <p id="name"> {state.item.name} </p>
-                    <p id="category">Category: {state.item.category} </p>
-                    <p id="description" > {state.item.description} </p>
-                  </div>
-                  <div id="detail-controls">
-                    <Button
-                      onClick={buyNFT}
-                      width={width < 1000 ? "70%" : "70%"}
-                      height="50px"
-                      child={
-                        <div id="button-child">
-                          <SiBinance size="20px" />&nbsp;&nbsp;&nbsp;
-                          <p id="price">{state.item.price}</p>
-                        </div>
-                      }
-                    ></Button>
+              : state.type === 2 ?
+                <div id="detail-content">
+                  {type === 1 ?
+                    <ColorExtractor getColors={getColors}>
+                      <img id="detail-image" src={state.item.src} alt="nft detail" />
+                    </ColorExtractor>
+                    : type === 2 ?
+                      <ReactPlayer
+                        id="detail-video"
+                        url={state.item.src}
+                        controls
+                      /> :
+                      type === 3 ?
+                        <model-viewer
+                          ar-scale="auto"
+                          ar ar-modes="webxr scene-viewer quick-look"
+                          id="arDetail"
+                          loading="eager"
+                          camera-controls auto-rotate src={state.item.src} >
+                        </model-viewer> : <div></div>}
+                  <div id="detail-info">
+                    <div id='detail-info-container'>
+                      <p id="name"> {state.item.name} </p>
+                      <p id="category">Category: {state.item.category} </p>
+                      <p id="description" > {state.item.description} </p>
+                    </div>
+                    <div id="detail-controls">
+                      <Button
+                        onClick={buyNFT}
+                        width={width < 1000 ? "70%" : "70%"}
+                        height="50px"
+                        child={
+                          <div id="button-child">
+                            <SiBinance size="20px" />&nbsp;&nbsp;&nbsp;
+                            <p id="price">{state.item.price}</p>
+                          </div>
+                        }
+                      ></Button>
+                    </div>
                   </div>
                 </div>
-              </div>
+                : <div></div>
           }
         />
       </div>

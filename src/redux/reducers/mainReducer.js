@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   marketItems: [],
   mineItems: [],
   boughtItems: [],
+  listItems: [],
   notification: {
     notify: false,
     text: '',
@@ -57,6 +58,11 @@ const mainReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         mineItems: payload
+      }
+    case actionTypes.SET_LIST_ITEMS:
+      return {
+        ...state,
+        listItems: payload
       }
     case actionTypes.SET_LOADING:
       return {

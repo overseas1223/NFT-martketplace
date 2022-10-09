@@ -3,9 +3,10 @@ const PINATA_SECRET_API_KEY = "d84c65524e3120c482ecbff1205b2bfa178e73fb5716dfdee
 const PINATA_API_FILE_URL = 'https://api.pinata.cloud/pinning/pinFileToIPFS'
 const PINATA_API_JSON_URL = 'https://api.pinata.cloud/pinning/pinJSONToIPFS'
 const PINATA_BASE_URL = 'https://gateway.pinata.cloud/ipfs/'
-const NFT_ADDRESS = '0x26f53dC2c90884F8379E3f59dbb0c8d3748097BC'
-const MARKETPLACE_ADDRESS = '0x94B4d14B7cB1A5a3bB9895Fdaf7f3D5142C323C7'
+const NFT_ADDRESS = '0x935Bc01E2A7559bA21dEe535d84f551173857be2'
+const MARKETPLACE_ADDRESS = '0x15bD90Cc2d981937ff3CA786ddb93526d5591C5B'
 const MORALIS_API_KEY = 'mB4j3v1syyg5ADkysVSwumoCzu2ui8vWP4KrMvcyJkbZIGBYE5cJ3l9r9oNuGQow'
+const CHAIN_ID = '0x61'
 const NFT_ABI = [
   {
     "inputs": [
@@ -450,6 +451,29 @@ const MARKETPLACE_ABI = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "itemId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "nftContract",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "deList",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "fetchItemsCreated",
     "outputs": [
@@ -517,6 +541,71 @@ const MARKETPLACE_ABI = [
   {
     "inputs": [],
     "name": "fetchMarketItems",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "itemId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "nftContract",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address payable",
+            "name": "seller",
+            "type": "address"
+          },
+          {
+            "internalType": "address payable",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "imgURL",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "metadataURL",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "category",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "sold",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct NFTMarketplace.MarketItem[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "fetchMyLists",
     "outputs": [
       {
         "components": [
@@ -816,5 +905,6 @@ export {
   MARKETPLACE_ADDRESS,
   NFT_ABI,
   MARKETPLACE_ABI,
-  MORALIS_API_KEY
+  MORALIS_API_KEY,
+  CHAIN_ID
 }

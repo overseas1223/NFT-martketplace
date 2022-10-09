@@ -25,7 +25,7 @@ const Explore = () => {
       <h1>NFT Explore</h1>
       <Search value={text} setValue={setText} />
       <div id="list-container">
-        <CardList list={SearchItems(text)} mode={false} />
+        <CardList list={SearchItems(text)} mode={1} />
       </div>
     </div>
   )

@@ -19,7 +19,7 @@ const Home = () => {
       <Hero />
       <p id="card-list-header-text"> Recent NFTs </p>
       <div id="list-container">
-        <CardList list={marketItems.reverse().slice(0, 9)} mode={false} />
+        <CardList list={marketItems.reverse().slice(0, 9)} mode={1} />
       </div>
     </div>
   )

@@ -9,13 +9,14 @@ import '../styles/MyNFTs.css'
 const MyNFTS = () => {
   const dispatch = useDispatch()
   const main = useSelector(state => state.main)
-  const { mineItems, marketContract, wallet, boughtItems } = main
+  const { mineItems, marketContract, wallet, boughtItems, listItems } = main
   const [type, setType] = useState(1)
-  
+
   useEffect(() => {
-    if(wallet) {
-      if(type === 1) dispatch(mainAction.getNFTsFromWallet(wallet))
-      else dispatch(mainAction.getMyNFTItems(marketContract, wallet))
+    if (wallet) {
+      if (type === 1) dispatch(mainAction.getNFTsFromWallet(wallet))
+      else if (type === 2) dispatch(mainAction.getMyNFTItems(marketContract, wallet))
+      else dispatch(mainAction.getMyLists(marketContract, wallet))
     }
   }, [type, wallet, marketContract, dispatch])
 
@@ -25,21 +26,30 @@ const MyNFTS = () => {
       <div className="tab-buttons">
         <Button
           onClick={() => { setType(1) }}
-          width={"150px"}
+          width={"100px"}
           height={"40px"}
           color={type === 1 ? "blue" : "white"}
           textColor="black"
           textContent="Wallet"
-          fontSize="20px"
+          fontSize="18px"
         />
         <Button
           onClick={() => { setType(2) }}
-          width={"150px"}
+          width={"100px"}
           height={"40px"}
           color={type === 2 ? "blue" : "white"}
           textColor="black"
           textContent="Bought"
-          fontSize="20px"
+          fontSize="18px"
+        />
+        <Button
+          onClick={() => { setType(3) }}
+          width={"100px"}
+          height={"40px"}
+          color={type === 3 ? "blue" : "white"}
+          textColor="black"
+          textContent="My List"
+          fontSize="18px"
         />
       </div>
       <div className="list-container">
@@ -49,8 +59,9 @@ const MyNFTS = () => {
               <WalletNFTCard key={index} nftSrc={item.token_uri} number={item.token_id} nftName={item.name} />
             ))}
           </div>
-          :
-          <CardList list={boughtItems} mode={true} />
+          : type === 2 ?
+            <CardList list={boughtItems} mode={2} />
+            : <CardList list={listItems} mode={3} />
         }
       </div>
     </div>
