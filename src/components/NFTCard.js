@@ -7,7 +7,11 @@ import Button from "./base/Button"
 import { Colors } from "../constants/Colors"
 import "../styles/NFTCard.css"
 
-const NFTCard = ({ nftName, price, nftSrc, onClick, mode }) => {
+const imageFileFormats = ['png', 'jpg', 'gif', 'svg']
+const mediaFileFormats = ['mp4', 'webm', 'mp3', 'wav', 'ogg']
+const threeDFileFormats = ['glb', 'gltf']
+
+const NFTCard = ({ nftName, price, nftSrc, onClick, mode, onResetClick }) => {
   const [colors, setColors] = useState([])
   const [type, setType] = useState(null)
   const getColors = colors => {
@@ -23,8 +27,9 @@ const NFTCard = ({ nftName, price, nftSrc, onClick, mode }) => {
     return decodeURIComponent(results[2].replace(/\+/g, ' '))
   }
 
-  const openResetPriceModal = () => {
-    
+  const get_url_extension = (url) => {
+    const extension = url.split(/[#?]/)[0].split('.').pop().trim()
+    return extension.toLowerCase()
   }
 
   useEffect(() => {
@@ -33,7 +38,9 @@ const NFTCard = ({ nftName, price, nftSrc, onClick, mode }) => {
       if (res === null) return
       setType(Number(res))
     } else {
-
+      const ext = get_url_extension(nftSrc)
+      const typetemp = imageFileFormats.indexOf(ext) !== -1 ? 1 : mediaFileFormats.indexOf(ext) !== -1 ? 2 : threeDFileFormats.indexOf(ext) !== -1 ? 3 : 0
+      setType(typetemp)
     }
   }, [nftSrc])
 
@@ -80,7 +87,7 @@ const NFTCard = ({ nftName, price, nftSrc, onClick, mode }) => {
           </div>
           <div className="buttons">
             <Button color={Colors.buttons.primary} textContent={mode === 2 ? "Sell" : mode === 1 ? "Buy Now" : "Delist"} onClick={onClick} />
-            {mode === 3 && <>&nbsp;&nbsp;<Button color={Colors.buttons.primary} textContent={"Reset Price"} onClick={openResetPriceModal} /></>}
+            {mode === 3 && <>&nbsp;&nbsp;<Button color={Colors.buttons.primary} textContent={"Reset Price"} onClick={onResetClick} /></>}
           </div>
         </>}>
     </Card>

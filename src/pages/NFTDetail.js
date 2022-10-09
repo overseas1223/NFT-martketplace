@@ -12,6 +12,10 @@ import { NFT_ADDRESS } from "../constants/Constants"
 import { SET_LOADING, SET_NOTIFICATION } from "../redux/type"
 import "../styles/NFTDetail.css"
 
+const imageFileFormats = ['png', 'jpg', 'gif', 'svg']
+const mediaFileFormats = ['mp4', 'webm', 'mp3', 'wav', 'ogg']
+const threeDFileFormats = ['glb', 'gltf']
+
 const useWindowSize = () => {
   const [size, setSize] = useState(0)
   useLayoutEffect(() => {
@@ -102,13 +106,20 @@ const NFTDetail = () => {
     return decodeURIComponent(results[2].replace(/\+/g, ' '))
   }
 
+  const get_url_extension = (url) => {
+    const extension = url.split(/[#?]/)[0].split('.').pop().trim()
+    return extension.toLowerCase()
+  }
+
   useEffect(() => {
     if (state.item.src.indexOf('ipfs') !== -1) {
       const res = getParameterByName('type', state.item.src)
       if (res === null) return
       setType(Number(res))
     } else {
-
+      const ext = get_url_extension(state.item.src)
+      const typetemp = imageFileFormats.indexOf(ext) !== -1 ? 1 : mediaFileFormats.indexOf(ext) !== -1 ? 2 : threeDFileFormats.indexOf(ext) !== -1 ? 3 : 0
+      setType(typetemp)
     }
   }, [state.item.src])
 

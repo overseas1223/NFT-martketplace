@@ -10,6 +10,7 @@ import {
     SET_LIST_ITEMS
 } from "../type"
 import axios from "axios"
+import Web3 from "web3"
 import { MORALIS_API_KEY, CHAIN_ID } from "../../constants/Constants"
 
 let decimal = 10 ** 18
@@ -138,10 +139,26 @@ export const mainAction = {
         }
     },
 
-    deList: (marketContract, wallet, itemId, nftAddress, tokenId) => async (dispatch) => {
+    deList: (marketContract, wallet, itemId, nftAddress, tokenId, listItems) => async (dispatch) => {
         try {
             dispatch({ type: SET_LOADING, payload: true })
             await marketContract.methods.deList(itemId, nftAddress, tokenId).send({ from: wallet })
+            const res = listItems.filter((item) => item.id !== itemId)
+            dispatch({ type: SET_LIST_ITEMS, payload: res })
+            dispatch({ type: SET_LOADING, payload: false })
+        } catch (err) {
+            console.log(err)
+            dispatch({ type: SET_LOADING, payload: false })
+        }
+    },
+
+    resetPrice: (marketContract, wallet, itemId, price, listItems) => async (dispatch) => {
+        try {
+            dispatch({ type: SET_LOADING, payload: true })
+            await marketContract.methods.resetPrice(itemId, Web3.utils.toWei(String(price), 'ether')).send({ from: wallet })
+            const foundIndex = listItems.findIndex((item) => item.id === itemId)
+            listItems[foundIndex].price = price
+            dispatch({ type: SET_LIST_ITEMS, payload: listItems })
             dispatch({ type: SET_LOADING, payload: false })
         } catch (err) {
             console.log(err)
